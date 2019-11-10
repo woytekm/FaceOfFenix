@@ -1,0 +1,4 @@
+<fonts>
+	<font id="LettersDigitsBold" filename="8x8_bold_letters_digits.fnt" filter="0X234567890\@ABCDEFGHNJKMOPQ:RSUVM1IYLT[];"></font>
+	<font id="LightDot8x8" filename="lightdot8x8.fnt" filter="MW023456789ABCDEFGHKLMOPQ:RSUVXYZTJ1I"></font>
+</fonts>

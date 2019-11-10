@@ -1,0 +1,6 @@
+<layout id="WatchFace">
+    <drawable class="Background" />
+    <label id="DayLabel" x="150" y="50" font="@Fonts.LightDot8x8" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_BLUE" />
+    <label id="MonthLabel" x="150" y="60" font="@Fonts.LettersDigitsBold" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_BLUE" />    
+    <label id="TimeLabel" x="center" y="center" font="Graphics.FONT_LARGE" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_BLUE" />
+</layout>
