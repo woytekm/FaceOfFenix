@@ -52,6 +52,10 @@ class FaceOfFenixView extends WatchUi.WatchFace {
 		MonthLabel.setColor(Application.getApp().getProperty("ForegroundColor"));
 		MonthLabel.setText("NOVEMBER");
 		
+		var ISOWeekLabel = View.findDrawableById("ISOWeekLabel");
+		ISOWeekLabel.setColor(Application.getApp().getProperty("ForegroundColor"));
+		ISOWeekLabel.setText("(46)");
+		
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
     }
