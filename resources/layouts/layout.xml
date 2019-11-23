@@ -1,7 +1,14 @@
-<layout id="WatchFace">
+<layout id="WatchFace240x240">
     <drawable class="Background" />
-    <label id="ISOWeekLabel" x="200" y="60" font="@Fonts.LettersDigitsBold" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_BLUE" />
-    <label id="DayLabel" x="120" y="55" font="@Fonts.LightDot8x8" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_BLUE" />
-    <label id="MonthLabel" x="120" y="65" font="@Fonts.LettersDigitsBold" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_BLUE" />    
-    <label id="TimeLabel" x="center" y="center" font="Graphics.FONT_LARGE" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_BLUE" />
+    <label id="ISOWeekLabel" x="195" y="67" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
+    <label id="DayLabel" x="118" y="60" font="@Fonts.uni0965" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
+    <label id="MonthLabel" x="118" y="74" font="@Fonts.uni0956" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />    
+    <label id="DayNumber" x="84" y="52" font="@Fonts.fabiolo_medium" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
+    <label id="TimeCenteredLabel" x="center" y="center" font="@Fonts.fabiolo_100" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
+    <label id="TimeShiftedLabel" x="140" y="center" font="@Fonts.fabiolo_100" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
+    <label id="SunsetLabel" x="144" y="27" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
+    <label id="SunriseLabel" x="66" y="27" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
+    <label id="AltitudeLabel" x="50" y="45" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
+    <label id="BatteryLabel" x="163" y="45" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
+    <label id="TempLabel" x="100" y="45" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
 </layout>

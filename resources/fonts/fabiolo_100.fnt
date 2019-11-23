@@ -1,0 +1,15 @@
+info face="Fabiolo Semibold" size=110 bold=1 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=1 padding=0,0,0,0 spacing=1,1 outline=0
+common lineHeight=110 base=92 scaleW=256 scaleH=256 pages=1 packed=0 alphaChnl=1 redChnl=0 greenChnl=0 blueChnl=0
+page id=0 file="fabiolo_100_0.png"
+chars count=11
+char id=48   x=192   y=0     width=36    height=65    xoffset=0     yoffset=27    xadvance=45    page=0  chnl=15
+char id=49   x=229   y=0     width=20    height=65    xoffset=0     yoffset=27    xadvance=27    page=0  chnl=15
+char id=50   x=40    y=0     width=37    height=65    xoffset=0     yoffset=27    xadvance=45    page=0  chnl=15
+char id=51   x=0     y=66    width=36    height=65    xoffset=0     yoffset=27    xadvance=45    page=0  chnl=15
+char id=52   x=0     y=0     width=39    height=65    xoffset=0     yoffset=27    xadvance=45    page=0  chnl=15
+char id=53   x=37    y=66    width=36    height=65    xoffset=0     yoffset=27    xadvance=45    page=0  chnl=15
+char id=54   x=78    y=0     width=37    height=65    xoffset=0     yoffset=27    xadvance=45    page=0  chnl=15
+char id=55   x=116   y=0     width=37    height=65    xoffset=0     yoffset=27    xadvance=44    page=0  chnl=15
+char id=56   x=74    y=66    width=36    height=65    xoffset=0     yoffset=27    xadvance=44    page=0  chnl=15
+char id=57   x=154   y=0     width=37    height=65    xoffset=0     yoffset=27    xadvance=44    page=0  chnl=15
+char id=58   x=111   y=66    width=9     height=43    xoffset=0     yoffset=49    xadvance=15    page=0  chnl=15

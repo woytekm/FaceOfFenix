@@ -1,3 +1,16 @@
 <drawables>
     <bitmap id="LauncherIcon" filename="launcher_icon.png" />
+    <bitmap id="Battery100" filename="battery_100.png" />
+    <bitmap id="Battery90" filename="battery_90.png" />
+    <bitmap id="Battery80" filename="battery_80.png" />
+    <bitmap id="Battery70" filename="battery_70.png" />
+    <bitmap id="Battery60" filename="battery_60.png" />
+    <bitmap id="Battery50" filename="battery_50.png" />
+    <bitmap id="Battery40" filename="battery_40.png" />
+    <bitmap id="Battery30" filename="battery_30.png" />
+    <bitmap id="Battery20" filename="battery_20.png" />
+    <bitmap id="Battery10" filename="battery_10.png" />
+    <bitmap id="Battery5" filename="battery_5.png" />
+    <bitmap id="BatteryEmpty" filename="battery_green_empty.png" />
+    <bitmap id="Mountain" filename="mountain.png" />
 </drawables>
