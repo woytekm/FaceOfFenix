@@ -134,7 +134,7 @@ class FaceOfFenixApp extends Application.AppBase {
 	 // 90 degrees for representing 24 hours = 1440 minutes = 16 minutes/degree
 	 
 	 var diagramRadius = 118;
-	 var diagramWidth = 8;
+	 var diagramWidth = 9;
 	 var diagramStartDeg = 135;
 	 var diagramEndDeg = 45;
 	 

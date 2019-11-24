@@ -16,6 +16,7 @@ class FaceOfFenixView extends WatchUi.WatchFace {
     var MountainIcon;
     var BatteryIcon;
     var screenHeight, screenWidth, mySettings;
+    var FontForeground = 0xFFFFFF;
     
     function initialize() {
         WatchFace.initialize();
@@ -55,9 +56,9 @@ class FaceOfFenixView extends WatchUi.WatchFace {
     
 
       	var SunriseLabel = View.findDrawableById("SunriseLabel");
-		SunriseLabel.setColor(Application.getApp().getProperty("ForegroundColor"));  
+		SunriseLabel.setColor(FontForeground);  
     	var SunsetLabel = View.findDrawableById("SunsetLabel");
-		SunsetLabel.setColor(Application.getApp().getProperty("ForegroundColor"));
+		SunsetLabel.setColor(FontForeground);
 
         var curLoc = getCurrentLocation();		
 		var SunriseMoment = getSunriseMoment(curLoc);
@@ -110,7 +111,7 @@ class FaceOfFenixView extends WatchUi.WatchFace {
        
         var temp = FaceOfFenixApp.lastTempReading().toNumber();        
         var TempLabel = View.findDrawableById("TempLabel");
-		TempLabel.setColor(Application.getApp().getProperty("ForegroundColor"));  
+		TempLabel.setColor(FontForeground);  
 		TempLabel.setText(Lang.format("$1$°",[temp]));
 		
         var now = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
@@ -126,27 +127,27 @@ class FaceOfFenixView extends WatchUi.WatchFace {
 		DayLabel.setText(weekdays[day_of_week-1]);
 
         var MonthLabel = View.findDrawableById("MonthLabel");
-		MonthLabel.setColor(Application.getApp().getProperty("ForegroundColor"));
+		MonthLabel.setColor(FontForeground);
 		MonthLabel.setText(month_names[month-1]);
 		
 		var currWeek = FaceOfFenixApp.getCurrentWeekNumber();
 		var currWeekString = Lang.format("($1$)",[currWeek]);
 		
 		var ISOWeekLabel = View.findDrawableById("ISOWeekLabel");
-		ISOWeekLabel.setColor(Application.getApp().getProperty("ForegroundColor"));
+		ISOWeekLabel.setColor(FontForeground);
 		ISOWeekLabel.setText(currWeekString);
 		
 		var DayNumberLabel = View.findDrawableById("DayNumber");
-		DayNumberLabel.setColor(Application.getApp().getProperty("ForegroundColor"));
+		DayNumberLabel.setColor(FontForeground);
 		DayNumberLabel.setText(Lang.format("$1$",[now.day]));
         
         var AltitudeLabel = View.findDrawableById("AltitudeLabel");
-		AltitudeLabel.setColor(Application.getApp().getProperty("ForegroundColor"));
+		AltitudeLabel.setColor(FontForeground);
         var Altitude = Toybox.Activity.getActivityInfo().altitude.toNumber();		
 		AltitudeLabel.setText(Lang.format("$1$m",[Altitude]));
 		
 		var BatteryLabel = View.findDrawableById("BatteryLabel");
-		BatteryLabel.setColor(Application.getApp().getProperty("ForegroundColor"));
+		BatteryLabel.setColor(FontForeground);
 		//System.println(Application.getApp().getProperty("ForegroundColor"));
         var batStatus = System.getSystemStats().battery.toNumber();		
 		BatteryLabel.setText(Lang.format("$1$%",[batStatus]));	
@@ -155,7 +156,8 @@ class FaceOfFenixView extends WatchUi.WatchFace {
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
         
-        dc.drawBitmap(29,42,MountainIcon);
+        dc.drawBitmap(104,14,calcMoon());
+        dc.drawBitmap(23,42,MountainIcon);
         dc.drawBitmap(184,41,BatteryIcon);
 	    FaceOfFenixApp.drawDaylightDiagram(dc,NightEndMoment,SunriseMoment,SunsetMoment,NightStartMoment,MidnightMoment);
         

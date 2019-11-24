@@ -11,6 +11,21 @@
     <bitmap id="Battery20" filename="battery_20.png" />
     <bitmap id="Battery10" filename="battery_10.png" />
     <bitmap id="Battery5" filename="battery_5.png" />
+    <bitmap id="moon_id_0" filename="moon_00.png" />
+    <bitmap id="moon_id_1" filename="moon_01.png" />
+    <bitmap id="moon_id_2" filename="moon_02.png" />
+    <bitmap id="moon_id_3" filename="moon_03.png" />
+    <bitmap id="moon_id_4" filename="moon_04.png" />
+    <bitmap id="moon_id_5" filename="moon_05.png" />
+    <bitmap id="moon_id_6" filename="moon_06.png" />
+    <bitmap id="moon_id_7" filename="moon_07.png" />
+    <bitmap id="moon_id_8" filename="moon_08.png" />
+    <bitmap id="moon_id_9" filename="moon_09.png" />
+    <bitmap id="moon_id_10" filename="moon_10.png" />
+    <bitmap id="moon_id_11" filename="moon_11.png" />
+    <bitmap id="moon_id_12" filename="moon_12.png" />
+    <bitmap id="moon_id_13" filename="moon_13.png" />
+    <bitmap id="moon_id_14" filename="moon_14.png" />
     <bitmap id="BatteryEmpty" filename="battery_green_empty.png" />
     <bitmap id="Mountain" filename="mountain.png" />
 </drawables>
