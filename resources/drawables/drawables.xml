@@ -28,4 +28,6 @@
     <bitmap id="moon_id_14" filename="moon_14.png" />
     <bitmap id="BatteryEmpty" filename="battery_green_empty.png" />
     <bitmap id="Mountain" filename="mountain.png" />
+    <bitmap id="Feet" filename="feet.png" />
+    <bitmap id="Heart" filename="heart.png" />
 </drawables>

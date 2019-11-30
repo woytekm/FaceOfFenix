@@ -6,6 +6,7 @@ using Toybox.Application;
 using Toybox.Time.Gregorian;
 using Toybox.Time;
 using Toybox.WatchUi as Ui;
+using Toybox.ActivityMonitor as AM;
 
 using Toybox.Position;
 using Toybox.System;
@@ -15,8 +16,14 @@ class FaceOfFenixView extends WatchUi.WatchFace {
 
     var MountainIcon;
     var BatteryIcon;
+    var FeetIcon;
+    var HeartIcon;
+    var screenSize = 240;
     var screenHeight, screenWidth, mySettings;
     var FontForeground = 0xFFFFFF;
+    var stepBarColor = 0x42c6ff;
+    var activeBarColor = 0x00cf1b;
+    var hrDiagramColor = 0xe3000b;
     
     function initialize() {
         WatchFace.initialize();
@@ -35,12 +42,22 @@ class FaceOfFenixView extends WatchUi.WatchFace {
 
     // Load your resources here
     function onLayout(dc) {
-        if(screenHeight == screenWidth == 240)
+        if(screenHeight == 240)
          { 
+           System.println("240");
            setLayout(Rez.Layouts.WatchFace240x240(dc));
+           screenSize = 240;
          }
-
+        else if(screenHeight == 280)
+         { 
+           System.println("280");
+           setLayout(Rez.Layouts.WatchFace280x280(dc));
+           screenSize = 280;
+         }
+        
         MountainIcon = Ui.loadResource(Rez.Drawables.Mountain);
+        FeetIcon = Ui.loadResource(Rez.Drawables.Feet);
+        HeartIcon = Ui.loadResource(Rez.Drawables.Heart);
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -54,26 +71,43 @@ class FaceOfFenixView extends WatchUi.WatchFace {
     // Update the view
     function onUpdate(dc) {
     
-
+        var locationKnown = false;
+        var SunriseMoment = null;
+        var SunriseTimeString = null;
+        var SunsetMoment = null;
+        var SunsetTimeString = null;
+        var MidnightMoment = null;
+        var NightEndMoment = null;
+        var NightStartMoment = null;
+        
       	var SunriseLabel = View.findDrawableById("SunriseLabel");
 		SunriseLabel.setColor(FontForeground);  
     	var SunsetLabel = View.findDrawableById("SunsetLabel");
 		SunsetLabel.setColor(FontForeground);
 
-        var curLoc = getCurrentLocation();		
-		var SunriseMoment = getSunriseMoment(curLoc);
-		var SunriseTimeString = getSunriseTimeString(SunriseMoment);
-		var SunsetMoment = getSunsetMoment(curLoc);
-		var SunsetTimeString = getSunsetTimeString(SunsetMoment);
-		var MidnightMoment = getTodayMidnightMoment();
+        var curLoc = getCurrentLocation();	
+        
+        if(curLoc == null)
+         {	
+           locationKnown = false;
+           SunriseLabel.setText("!G  ");
+           SunsetLabel.setText("    ");
+          }
+        else
+         {
+           locationKnown = true;
+		   SunriseMoment = getSunriseMoment(curLoc);
+		   SunriseTimeString = getSunriseTimeString(SunriseMoment);
+		   SunsetMoment = getSunsetMoment(curLoc);
+		   SunsetTimeString = getSunsetTimeString(SunsetMoment);
+		   MidnightMoment = getTodayMidnightMoment();
 		
-		var NightEndMoment = getNightEndMoment(curLoc);
-		var NightStartMoment = getNightStartMoment(curLoc);
-		
-		
-        SunriseLabel.setText(SunriseTimeString);
-        SunsetLabel.setText(SunsetTimeString);         
-     
+		   NightEndMoment = getNightEndMoment(curLoc);
+		   NightStartMoment = getNightStartMoment(curLoc);
+           SunriseLabel.setText(SunriseTimeString);
+           SunsetLabel.setText(SunsetTimeString);         
+          }
+          
         
      
         // Get the current time and format it correctly
@@ -152,15 +186,82 @@ class FaceOfFenixView extends WatchUi.WatchFace {
         var batStatus = System.getSystemStats().battery.toNumber();		
 		BatteryLabel.setText(Lang.format("$1$%",[batStatus]));	
 		BatteryIcon = FaceOfFenixApp.getBatteryIcon(batStatus);	
-						
+		
+		var activityMonitorInfo = Toybox.ActivityMonitor.getInfo();
+		
+		var DistanceLabel = View.findDrawableById("DistanceLabel");
+		DistanceLabel.setColor(FontForeground);
+        var Distance = (activityMonitorInfo.distance.toDouble()/100)/1000;
+        if(Distance < 1)
+         {
+          Distance = (activityMonitorInfo.distance.toDouble()/100);
+          DistanceLabel.setText(Lang.format("$1$m",[Distance.format("%1d")]));
+         }
+        else
+         {
+		   DistanceLabel.setText(Lang.format("$1$km",[Distance.format("%.2f")]));	
+		 }
+		
+		var StepsLabel = View.findDrawableById("StepsLabel");
+		StepsLabel.setColor(FontForeground);
+        var Steps = activityMonitorInfo.steps;
+		StepsLabel.setText(Lang.format("$1$",[Steps]));			
+		
+		var StepsGoalLabel = View.findDrawableById("StepsGoalLabel");
+		StepsGoalLabel.setColor(stepBarColor);
+        var StepsGoal = activityMonitorInfo.stepGoal;
+        var StepPercentage = FaceOfFenixApp.calculateStepGoalPercentage(StepsGoal,Steps);
+		StepsGoalLabel.setText(Lang.format("$1$",[StepPercentage]));		
+		
+		var ActivityGoalLabel = View.findDrawableById("ActiveGoalLabel");
+		ActivityGoalLabel.setColor(activeBarColor);
+        var ActivityGoal = activityMonitorInfo.activeMinutesWeekGoal;
+        var ActivityPercentage = FaceOfFenixApp.calculateStepGoalPercentage(ActivityGoal,activityMonitorInfo.activeMinutesWeek.total);
+		ActivityGoalLabel.setText(Lang.format("$1$",[ActivityPercentage]));			
+		
+			
+		var CaloriesLabel = View.findDrawableById("CaloriesLabel");
+		CaloriesLabel.setColor(FontForeground);
+		var Calories = activityMonitorInfo.calories;
+		CaloriesLabel.setText(Lang.format("$1$KC",[Calories]));
+				
+		var CurrentHRLabel = View.findDrawableById("CurrentHRLabel");
+		CurrentHRLabel.setColor(FontForeground);
+		var heartRateHistory = ActivityMonitor.getHeartRateHistory(1, true);
+		var CurrentHRSample = heartRateHistory.next();
+        var CurrentHR = CurrentHRSample.heartRate;
+		if((CurrentHRSample == ActivityMonitor.INVALID_HR_SAMPLE) || (CurrentHR == 255))
+		 {
+		  CurrentHRLabel.setText("--");
+		 }
+		else
+		 {
+		  //CurrentHRLabel.setText("255");
+		  CurrentHRLabel.setText(Lang.format("$1$",[CurrentHR]));		
+		 }
+		
+		 
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
         
-        dc.drawBitmap(104,14,calcMoon());
+        dc.drawBitmap(105,14,calcMoon());
         dc.drawBitmap(23,42,MountainIcon);
         dc.drawBitmap(184,41,BatteryIcon);
-	    FaceOfFenixApp.drawDaylightDiagram(dc,NightEndMoment,SunriseMoment,SunsetMoment,NightStartMoment,MidnightMoment);
+        dc.drawBitmap(160,185,FeetIcon);
+        dc.drawBitmap(205,155,HeartIcon);
         
+        
+        if(locationKnown == true)
+         {
+	      FaceOfFenixApp.drawDaylightDiagram(dc,NightEndMoment,SunriseMoment,SunsetMoment,NightStartMoment,MidnightMoment,screenSize);
+	     }
+	     
+	    FaceOfFenixApp.drawMoveBar(dc, activityMonitorInfo.moveBarLevel,screenSize);
+	    FaceOfFenixApp.drawStepGoalBar(dc, activityMonitorInfo.stepGoal, activityMonitorInfo.steps, stepBarColor,screenSize);
+	    FaceOfFenixApp.drawActiveWeekGoalBar(dc, activityMonitorInfo.activeMinutesWeekGoal, activityMonitorInfo.activeMinutesWeek.total, activeBarColor, screenSize);
+	    FaceOfFenixApp.drawHRDiagram(dc,hrDiagramColor,screenSize);
+	       
+	    
     }
 
     // Called when this View is removed from the screen. Save the

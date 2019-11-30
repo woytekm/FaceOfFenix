@@ -4,6 +4,7 @@ using Toybox.Time.Gregorian;
 using Toybox.WatchUi as Ui;
 using Toybox.SensorHistory;
 using Toybox.Graphics as Gfx;
+using Toybox.Time;
 
 
 class FaceOfFenixApp extends Application.AppBase {
@@ -128,7 +129,168 @@ class FaceOfFenixApp extends Application.AppBase {
 
 	}
 	
-	function drawDaylightDiagram(dcObj,NightEndMoment,SunriseMoment,SunsetMoment,NightStartMoment,MidnightMoment)
+   function calculateStepGoalPercentage(stepGoal, steps)
+    {
+      if((stepGoal == 0) || (steps == 0))
+       { 
+        return 0; 
+       }
+       
+      var percentage = (steps.toDouble() / stepGoal.toDouble()) * 100;
+      return percentage.toNumber();   
+    }
+    
+   function drawActiveWeekGoalBar(dcObj, activeMinutesWeekGoal, activeMinutes, color, screenS)
+    {
+ 
+ 	 var diagramRadius = 0;
+	 var diagramWidth = 9;
+	 var diagramLength = 35;
+	 var diagramEndDeg = 270;
+	 var diagramStartDeg = diagramEndDeg + diagramLength;
+	 var oneMoveBarSeg = 6;
+	 
+	 if(screenS == 240)
+	  {
+	    diagramRadius = 118;
+	  }
+	 else if(screenS == 280)
+	  {
+	    diagramRadius = 138;
+	  }
+     
+	 dcObj.setColor(color, Graphics.COLOR_BLACK);
+	 dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius,Gfx.ARC_CLOCKWISE,diagramStartDeg,diagramEndDeg);
+     dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - diagramWidth,Gfx.ARC_CLOCKWISE,diagramStartDeg,diagramEndDeg);  	 
+     
+     for(var i = 0; i < diagramWidth; i++)
+      {
+        dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramStartDeg,diagramStartDeg-1);
+        dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramEndDeg+1,diagramEndDeg);
+      }	  
+      
+      if((activeMinutesWeekGoal == 0) || (activeMinutes == 0))
+       {
+         return;
+       }
+       
+      var percentage = (activeMinutes.toDouble() / activeMinutesWeekGoal.toDouble()) * 100;
+      percentage = percentage.toNumber();
+      if(percentage > 99)
+       {
+        percentage = 100;
+       }
+      var barUnit = (diagramStartDeg.toDouble() - diagramEndDeg.toDouble()) / 100;
+      var barDegrees = (percentage * barUnit);
+      barDegrees = barDegrees.toNumber();
+      
+      for(var i = 2; i < (diagramWidth-1); i++)
+        {
+         dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramStartDeg,diagramStartDeg-barDegrees-1);
+        }        
+    
+    }
+    
+   function drawStepGoalBar(dcObj, stepGoal, steps, color, screenS)
+    {
+	 // 50 degrees to represent % step goal reached for today
+	 
+	 var diagramRadius = 118;
+	 var diagramWidth = 9;
+	 var diagramLength = 35;
+	 var diagramStartDeg = 268;
+	 var diagramEndDeg = diagramStartDeg - diagramLength;
+	 var oneMoveBarSeg = 6;
+	 
+	  if(screenS == 240)
+	  {
+	    diagramRadius = 118;
+	  }
+	 else if(screenS == 280)
+	  {
+	    diagramRadius = 138;
+	  }
+     
+	 dcObj.setColor(color, Graphics.COLOR_BLACK);
+	 dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius,Gfx.ARC_CLOCKWISE,diagramStartDeg,diagramEndDeg);
+     dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - diagramWidth,Gfx.ARC_CLOCKWISE,diagramStartDeg,diagramEndDeg);  	 
+     
+     for(var i = 0; i < diagramWidth; i++)
+      {
+        dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramStartDeg,diagramStartDeg-1);
+        dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramEndDeg+1,diagramEndDeg);
+      }	  
+      
+      if((stepGoal == 0) || (steps == 0))
+       {
+         return;
+       }
+       
+      var percentage = (steps.toDouble() / stepGoal.toDouble()) * 100;
+      percentage = percentage.toNumber();
+      if(percentage > 99)
+       {
+        percentage = 100;
+       }
+      var barUnit = (diagramStartDeg.toDouble() - diagramEndDeg.toDouble()) / 100;
+      var barDegrees = (percentage * barUnit);
+      barDegrees = barDegrees.toNumber();
+      
+      for(var i = 2; i < (diagramWidth-1); i++)
+        {
+         dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramStartDeg,diagramStartDeg-barDegrees-1);
+        }     
+      
+      
+	 }
+	 
+	 
+    function drawMoveBar(dcObj,moveBarLevel,screenS)
+	 {
+	 
+	 // 37 degrees for representing 5 bars = 7 - 2 (show segment boundary) = 5 degrees per segment of move bar
+	 var diagramRadius = 118;
+	 var diagramWidth = 9;
+	 var diagramStartDeg = 203;
+	 var diagramEndDeg = 165;
+	 var oneMoveBarSeg = 6;
+     var colorGradient = [0xff77f0, 0xff77f0, 0xff77f0, 0x8d2496, 0x6a0079];
+     
+      if(screenS == 240)
+	  {
+	    diagramRadius = 118;
+	  }
+	 else if(screenS == 280)
+	  {
+	    diagramRadius = 138;
+	  }
+     
+	 dcObj.setColor(0xff1fbc, Graphics.COLOR_BLACK);
+	 dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius,Gfx.ARC_CLOCKWISE,diagramStartDeg,diagramEndDeg);
+     dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - diagramWidth,Gfx.ARC_CLOCKWISE,diagramStartDeg,diagramEndDeg);  	 
+     
+     for(var i = 0; i < diagramWidth; i++)
+      {
+        dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramStartDeg,diagramStartDeg-1);
+        dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramEndDeg+1,diagramEndDeg);
+      }
+
+     var segmentStartDeg = diagramStartDeg-2;
+     
+     for(var i = 0; i < moveBarLevel; i++)
+      {
+       dcObj.setColor(colorGradient[i], Graphics.COLOR_BLACK);
+       for(var j = 2; j < (diagramWidth-1); j++)
+        {
+         dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - j,Gfx.ARC_CLOCKWISE,segmentStartDeg,segmentStartDeg-oneMoveBarSeg);
+        }    
+       segmentStartDeg -= oneMoveBarSeg + 1;
+            
+      }
+      	 
+	 }
+	 
+	function drawDaylightDiagram(dcObj,NightEndMoment,SunriseMoment,SunsetMoment,NightStartMoment,MidnightMoment,screenS)
 	{
 	 
 	 // 90 degrees for representing 24 hours = 1440 minutes = 16 minutes/degree
@@ -138,6 +300,15 @@ class FaceOfFenixApp extends Application.AppBase {
 	 var diagramStartDeg = 135;
 	 var diagramEndDeg = 45;
 	 
+	 if(screenS == 240)
+	  {
+	    diagramRadius = 118;
+	  }
+	 else if(screenS == 280)
+	  {
+	    diagramRadius = 138;
+	  }
+	  
 	 dcObj.setColor(Graphics.COLOR_ORANGE, Graphics.COLOR_BLACK);
 	 dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius,Gfx.ARC_CLOCKWISE,diagramStartDeg,diagramEndDeg);
      dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - diagramWidth,Gfx.ARC_CLOCKWISE,diagramStartDeg,diagramEndDeg);  
@@ -186,5 +357,50 @@ class FaceOfFenixApp extends Application.AppBase {
      
      
     }
+    
+   function drawHRDiagram(dcObj,color,screenS)
+    {
+      // 24 bars, 4 pixels wide, 20 pixels high, one pixel gap between bars - 4 hour history, 10 minutes per bar
+      // 240 samples / 4h - one sample per minute
+      var fourHours = new Time.Duration(14400);
+      var heartRateHistory = ActivityMonitor.getHeartRateHistory(fourHours, true); //newestFirst = true
+      var minValue = heartRateHistory.getMin();
+      var maxValue = heartRateHistory.getMax();
+      var heartRateSample;
+      var goodSamples = 0;
+      var intervalSum = 0;
+      var sampleCounter = 0;
+      var intervalAvg = 0;
+      
+      heartRateSample = heartRateHistory.next();      
+
+      while(heartRateSample != null)
+       {
+         
+         intervalSum = 0;
+         goodSamples = 0;
+         
+         while((sampleCounter < 10) && (heartRateSample != null))
+          {
+            heartRateSample = heartRateHistory.next();
+            if(heartRateSample != null)
+             {
+              if(heartRateSample.heartRate != ActivityMonitor.INVALID_HR_SAMPLE)
+               {
+                intervalSum += heartRateSample.heartRate;
+                goodSamples++;
+               }
+             }
+          }
+          
+         intervalAvg = intervalSum.toDouble() / goodSamples.toDouble();  
+         intervalAvg = intervalAvg.toNumber();   
+         
+       }
+ 
+      // System.println( "Samples: " + samples );
+      
+    } 
+   
 
 }
