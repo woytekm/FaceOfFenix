@@ -170,18 +170,10 @@ class FaceOfFenixView extends WatchUi.WatchFace {
 		ISOWeekLabel.setText(currWeekString);
 
         var DayNumberLabel = null;
-        
-        if(now.day < 10)
-         {		
-		  DayNumberLabel = View.findDrawableById("DayNumberSingle");
-		 }
-		else
-		 {
-		  DayNumberLabel = View.findDrawableById("DayNumber");
-		 } 
-		 
+        var day = now.day;
+		DayNumberLabel = View.findDrawableById("DayNumber");		 
 	    DayNumberLabel.setColor(FontForeground);
-		DayNumberLabel.setText(Lang.format("$1$",[now.day]));
+		DayNumberLabel.setText(Lang.format("$1$",[day]));
         
         var AltitudeLabel = View.findDrawableById("AltitudeLabel");
 		AltitudeLabel.setColor(FontForeground);

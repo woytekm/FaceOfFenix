@@ -3,15 +3,14 @@
     <label id="ISOWeekLabel" x="215" y="89" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
     <label id="DayLabel" x="140" y="83" font="@Fonts.uni0965" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
     <label id="MonthLabel" x="140" y="95" font="@Fonts.uni0956" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />    
-    <label id="DayNumber" x="102" y="72" font="@Fonts.fabiolo_medium" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
-    <label id="DayNumberSingle" x="113" y="72" font="@Fonts.fabiolo_medium" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
+    <label id="DayNumber" x="134" y="72" font="@Fonts.fabiolo_medium" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
     <label id="TimeCenteredLabel" x="center" y="center" font="@Fonts.fabiolo_100" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
     <label id="TimeShiftedLabel" x="140" y="center" font="@Fonts.fabiolo_100" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
     <label id="SunsetLabel" x="178" y="36" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
     <label id="SunriseLabel" x="70" y="36" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
     <label id="AltitudeLabel" x="45" y="53" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
-    <label id="BatteryLabel" x="194" y="53" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
-    <label id="TempLabel" x="125" y="53" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
+    <label id="BatteryLabel" x="221" y="53" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
+    <label id="TempLabel" x="125" y="53" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
     <label id="DistanceLabel" x="110" y="226" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
     <label id="StepsLabel" x="184" y="226" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
     <label id="StepsGoalLabel" x="50" y="226" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
