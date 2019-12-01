@@ -4,6 +4,7 @@
     <label id="DayLabel" x="118" y="60" font="@Fonts.uni0965" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
     <label id="MonthLabel" x="118" y="74" font="@Fonts.uni0956" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />    
     <label id="DayNumber" x="84" y="52" font="@Fonts.fabiolo_medium" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
+    <label id="DayNumberSingle" x="90" y="52" font="@Fonts.fabiolo_medium" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
     <label id="TimeCenteredLabel" x="center" y="center" font="@Fonts.fabiolo_100" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
     <label id="TimeShiftedLabel" x="140" y="center" font="@Fonts.fabiolo_100" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
     <label id="SunsetLabel" x="144" y="28" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />

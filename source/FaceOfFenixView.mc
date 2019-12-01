@@ -44,13 +44,11 @@ class FaceOfFenixView extends WatchUi.WatchFace {
     function onLayout(dc) {
         if(screenHeight == 240)
          { 
-           System.println("240");
            setLayout(Rez.Layouts.WatchFace240x240(dc));
            screenSize = 240;
          }
         else if(screenHeight == 280)
          { 
-           System.println("280");
            setLayout(Rez.Layouts.WatchFace280x280(dc));
            screenSize = 280;
          }
@@ -170,9 +168,19 @@ class FaceOfFenixView extends WatchUi.WatchFace {
 		var ISOWeekLabel = View.findDrawableById("ISOWeekLabel");
 		ISOWeekLabel.setColor(FontForeground);
 		ISOWeekLabel.setText(currWeekString);
-		
-		var DayNumberLabel = View.findDrawableById("DayNumber");
-		DayNumberLabel.setColor(FontForeground);
+
+        var DayNumberLabel = null;
+        
+        if(now.day < 10)
+         {		
+		  DayNumberLabel = View.findDrawableById("DayNumberSingle");
+		 }
+		else
+		 {
+		  DayNumberLabel = View.findDrawableById("DayNumber");
+		 } 
+		 
+	    DayNumberLabel.setColor(FontForeground);
 		DayNumberLabel.setText(Lang.format("$1$",[now.day]));
         
         var AltitudeLabel = View.findDrawableById("AltitudeLabel");
@@ -244,12 +252,22 @@ class FaceOfFenixView extends WatchUi.WatchFace {
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
         
-        dc.drawBitmap(105,14,calcMoon());
-        dc.drawBitmap(23,42,MountainIcon);
-        dc.drawBitmap(184,41,BatteryIcon);
-        dc.drawBitmap(160,185,FeetIcon);
-        dc.drawBitmap(205,155,HeartIcon);
-        
+        if(screenSize == 240)
+         {
+           dc.drawBitmap(105,14,calcMoon());
+           dc.drawBitmap(23,42,MountainIcon);
+           dc.drawBitmap(184,41,BatteryIcon);
+           dc.drawBitmap(160,185,FeetIcon);
+           dc.drawBitmap(205,155,HeartIcon);
+         }
+        else if(screenSize == 280)
+         {
+           dc.drawBitmap(126,17,calcMoon());
+           dc.drawBitmap(25,50,MountainIcon);
+           dc.drawBitmap(218,50,BatteryIcon);
+           dc.drawBitmap(180,220,FeetIcon);
+           dc.drawBitmap(235,173,HeartIcon);        
+         }
         
         if(locationKnown == true)
          {
@@ -259,7 +277,7 @@ class FaceOfFenixView extends WatchUi.WatchFace {
 	    FaceOfFenixApp.drawMoveBar(dc, activityMonitorInfo.moveBarLevel,screenSize);
 	    FaceOfFenixApp.drawStepGoalBar(dc, activityMonitorInfo.stepGoal, activityMonitorInfo.steps, stepBarColor,screenSize);
 	    FaceOfFenixApp.drawActiveWeekGoalBar(dc, activityMonitorInfo.activeMinutesWeekGoal, activityMonitorInfo.activeMinutesWeek.total, activeBarColor, screenSize);
-	    FaceOfFenixApp.drawHRDiagram(dc,hrDiagramColor,screenSize);
+	    //FaceOfFenixApp.drawHRDiagram(dc,hrDiagramColor,screenSize);
 	       
 	    
     }

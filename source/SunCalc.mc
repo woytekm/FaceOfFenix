@@ -255,8 +255,9 @@ function getTodayMidnightMoment()
     :year   => NowGregorianInfo.year,
     :month  => NowGregorianInfo.month, // 3.x devices can also use :month => Gregorian.MONTH_MAY
     :day    => NowGregorianInfo.day,
-    :hour   => 0,
-    :min    => 0
+    :hour   => 0,  // here we have a problem with daylight saving - looks like a Connect IQ bug
+    :minute => 0,
+    :second => 0
     };
   
    var MidnightMoment = Gregorian.moment(todayMidnight);

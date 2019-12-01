@@ -157,6 +157,7 @@ class FaceOfFenixApp extends Application.AppBase {
 	 else if(screenS == 280)
 	  {
 	    diagramRadius = 138;
+	    diagramWidth = 11;
 	  }
      
 	 dcObj.setColor(color, Graphics.COLOR_BLACK);
@@ -209,6 +210,7 @@ class FaceOfFenixApp extends Application.AppBase {
 	 else if(screenS == 280)
 	  {
 	    diagramRadius = 138;
+	    diagramWidth = 11;
 	  }
      
 	 dcObj.setColor(color, Graphics.COLOR_BLACK);
@@ -263,6 +265,7 @@ class FaceOfFenixApp extends Application.AppBase {
 	 else if(screenS == 280)
 	  {
 	    diagramRadius = 138;
+	    diagramWidth = 11;
 	  }
      
 	 dcObj.setColor(0xff1fbc, Graphics.COLOR_BLACK);
@@ -307,6 +310,7 @@ class FaceOfFenixApp extends Application.AppBase {
 	 else if(screenS == 280)
 	  {
 	    diagramRadius = 138;
+	    diagramWidth = 11;
 	  }
 	  
 	 dcObj.setColor(Graphics.COLOR_ORANGE, Graphics.COLOR_BLACK);
@@ -326,8 +330,8 @@ class FaceOfFenixApp extends Application.AppBase {
      var FromMidnightTillNight = NightStartMoment.value() - MidnightMoment.value();
      var FromMidnightTillNow = Now.value() - MidnightMoment.value();
      
-     System.println((FromMidnightTillSunrise.toNumber()/60)/16);
-     System.println((FromMidnightTillSunset.toNumber()/60)/16);
+     System.println(Now.value());
+     System.println(MidnightMoment.value());
      
      var dayStartDeg = (FromMidnightTillSunrise.toNumber()/60)/16;
      var dayEndDeg = (FromMidnightTillSunset.toNumber()/60)/16;
@@ -336,7 +340,8 @@ class FaceOfFenixApp extends Application.AppBase {
      var nightStartDeg = (FromMidnightTillNight.toNumber()/60)/16;
       
      var nowDeg = (FromMidnightTillNow.toNumber()/60)/16;
- 
+     System.println(nowDeg);
+     
      dcObj.setColor(Graphics.COLOR_ORANGE, Graphics.COLOR_BLACK);
      for(var i = 2; i < (diagramWidth-1); i++)
       {
