@@ -187,7 +187,7 @@ class FaceOfFenixApp extends Application.AppBase {
       
       for(var i = 2; i < (diagramWidth-1); i++)
         {
-         dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramStartDeg,diagramStartDeg-barDegrees-1);
+         dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramEndDeg+barDegrees,diagramEndDeg+1);
         }        
     
     }
@@ -376,7 +376,7 @@ class FaceOfFenixApp extends Application.AppBase {
       var intervalSum = 0;
       var sampleCounter = 0;
       var intervalAvg = 0;
-      
+       
       heartRateSample = heartRateHistory.next();      
 
       while(heartRateSample != null)

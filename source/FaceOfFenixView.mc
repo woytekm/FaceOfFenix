@@ -130,7 +130,7 @@ class FaceOfFenixView extends WatchUi.WatchFace {
         
         //if( (currHour > 9) || (Application.getApp().getProperty("UseMilitaryFormat")) )
         // {
-          TimeLabel = View.findDrawableById("TimeCenteredLabel");
+        TimeLabel = View.findDrawableById("TimeCenteredLabel");
         // }
         //else
         // {
@@ -258,7 +258,7 @@ class FaceOfFenixView extends WatchUi.WatchFace {
            dc.drawBitmap(25,50,MountainIcon);
            dc.drawBitmap(218,50,BatteryIcon);
            dc.drawBitmap(180,220,FeetIcon);
-           dc.drawBitmap(235,173,HeartIcon);        
+           dc.drawBitmap(235,177,HeartIcon);        
          }
         
         if(locationKnown == true)
