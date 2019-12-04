@@ -363,26 +363,40 @@ class FaceOfFenixApp extends Application.AppBase {
      
     }
     
-   function drawHRDiagram(dcObj,color,screenS)
+   function drawHRDiagram(dcObj,color,screenS,View,FontForeground)
     {
       // 24 bars, 4 pixels wide, 20 pixels high, one pixel gap between bars - 4 hour history, 10 minutes per bar
       // 240 samples / 4h - one sample per minute
       // each pixel up is 5% up, maxValue = 100% = 20px
-      var xStart = 205; 
-      var barBase = 218;
-      var barWidthPlusGap = 6;
-      var barWidth = 4;
-      var sampleBucket = 10;
+      var xStart = 0; 
+      var barBase = 0;
+      var barGap = 0;
+      var barWidth = 0;
+      var sampleBucket = 0;
+      var graphHeight = 0;
+      var percentPerPixel;
          
       if(screenS == 280)
        {
-         var xStart = 210; 
-         var barBase = 218;
-         var barWidthPlusGap = 6;
-         var barWidth = 4;
-         var sampleBucket = 10;
+         xStart = 210; 
+         barBase = 218;
+         barGap = 2;
+         barWidth = 4;
+         sampleBucket = 10;
+         graphHeight = 25;
        }
-       
+      else if(screenS == 240)
+       {
+         xStart = 185; 
+         barBase = 190;
+         barGap = 2;
+         barWidth = 4;
+         sampleBucket = 10;
+         graphHeight = 25;      
+       }
+
+      percentPerPixel = 100 / graphHeight;   
+      var pixelHeight;   
       var heartRateSample;
       var goodSamples = 0;
       var intervalSum = 0;
@@ -395,6 +409,18 @@ class FaceOfFenixApp extends Application.AppBase {
       var maxValue = heartRateHistory.getMax();
          
       heartRateSample = heartRateHistory.next();      
+      
+      if((heartRateSample == null) || (minValue == null) || (maxValue == null) || (minValue == 255) || (maxValue == 255))
+       {
+        return;
+       }
+       
+      var LowestHRLabel = View.findDrawableById("LowestHRLabel");
+      var HighestHRLabel = View.findDrawableById("HighestHRLabel");
+      LowestHRLabel.setColor(FontForeground);
+      HighestHRLabel.setColor(FontForeground);
+      LowestHRLabel.setText(Lang.format("$1$",[minValue]));
+      HighestHRLabel.setText(Lang.format("$1$",[maxValue]));
 
       while(heartRateSample != null)
        {
@@ -428,23 +454,27 @@ class FaceOfFenixApp extends Application.AppBase {
            currIntervalPercentageOfMax = currIntervalPercentageOfMax.toNumber();
            //System.println("curr interval percentage of max value:"+currIntervalPercentageOfMax);
            
-           var pixelHeight = 0;
+           pixelHeight = 0;
            
            if(currIntervalPercentageOfMax > 0)
             {
-             pixelHeight = currIntervalPercentageOfMax / 5;
+             pixelHeight = currIntervalPercentageOfMax / percentPerPixel;
             }
            else
             {
              pixelHeight = 0; 
             }
-              
-           //System.println("pixel height:"+pixelHeight);
-           dcObj.setColor(Graphics.COLOR_RED,Graphics.COLOR_BLACK);
-           dcObj.fillRectangle(xStart, barBase-pixelHeight, barWidth, pixelHeight);
-           xStart -= barWidthPlusGap;
+           
           }  
+         else
+          {
+           pixelHeight = 0;
+          }
           
+         dcObj.setColor(Graphics.COLOR_RED,Graphics.COLOR_BLACK);
+         dcObj.fillRectangle(xStart, barBase-pixelHeight, barWidth, pixelHeight);
+         xStart -= barWidth+barGap; 
+         
        }
     } 
    
