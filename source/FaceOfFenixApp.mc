@@ -367,16 +367,33 @@ class FaceOfFenixApp extends Application.AppBase {
     {
       // 24 bars, 4 pixels wide, 20 pixels high, one pixel gap between bars - 4 hour history, 10 minutes per bar
       // 240 samples / 4h - one sample per minute
-      var fourHours = new Time.Duration(14400);
-      var heartRateHistory = ActivityMonitor.getHeartRateHistory(fourHours, true); //newestFirst = true
-      var minValue = heartRateHistory.getMin();
-      var maxValue = heartRateHistory.getMax();
+      // each pixel up is 5% up, maxValue = 100% = 20px
+      var xStart = 205; 
+      var barBase = 218;
+      var barWidthPlusGap = 6;
+      var barWidth = 4;
+      var sampleBucket = 10;
+         
+      if(screenS == 280)
+       {
+         var xStart = 210; 
+         var barBase = 218;
+         var barWidthPlusGap = 6;
+         var barWidth = 4;
+         var sampleBucket = 10;
+       }
+       
       var heartRateSample;
       var goodSamples = 0;
       var intervalSum = 0;
       var sampleCounter = 0;
       var intervalAvg = 0;
-       
+
+      var fourHours = new Time.Duration(14400);
+      var heartRateHistory = ActivityMonitor.getHeartRateHistory(fourHours, true); //newestFirst = true
+      var minValue = heartRateHistory.getMin();
+      var maxValue = heartRateHistory.getMax();
+         
       heartRateSample = heartRateHistory.next();      
 
       while(heartRateSample != null)
@@ -384,8 +401,9 @@ class FaceOfFenixApp extends Application.AppBase {
          
          intervalSum = 0;
          goodSamples = 0;
+         sampleCounter = 0;
          
-         while((sampleCounter < 10) && (heartRateSample != null))
+         while((sampleCounter < sampleBucket) && (heartRateSample != null))
           {
             heartRateSample = heartRateHistory.next();
             if(heartRateSample != null)
@@ -396,16 +414,38 @@ class FaceOfFenixApp extends Application.AppBase {
                 goodSamples++;
                }
              }
+            sampleCounter++;
           }
-          
-         intervalAvg = intervalSum.toDouble() / goodSamples.toDouble();  
-         intervalAvg = intervalAvg.toNumber();   
+
          
+         if((intervalSum != 0) && (goodSamples != 0))
+          { 
+           intervalAvg = intervalSum.toDouble() / goodSamples.toDouble();  
+
+           //System.println("interval avg:"+intervalAvg);
+           //System.println("good samples:"+goodSamples);
+           var currIntervalPercentageOfMax = (intervalAvg/maxValue) * 100;
+           currIntervalPercentageOfMax = currIntervalPercentageOfMax.toNumber();
+           //System.println("curr interval percentage of max value:"+currIntervalPercentageOfMax);
+           
+           var pixelHeight = 0;
+           
+           if(currIntervalPercentageOfMax > 0)
+            {
+             pixelHeight = currIntervalPercentageOfMax / 5;
+            }
+           else
+            {
+             pixelHeight = 0; 
+            }
+              
+           //System.println("pixel height:"+pixelHeight);
+           dcObj.setColor(Graphics.COLOR_RED,Graphics.COLOR_BLACK);
+           dcObj.fillRectangle(xStart, barBase-pixelHeight, barWidth, pixelHeight);
+           xStart -= barWidthPlusGap;
+          }  
+          
        }
- 
-      // System.println( "Samples: " + samples );
-      
     } 
    
-
 }

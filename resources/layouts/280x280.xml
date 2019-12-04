@@ -10,7 +10,7 @@
     <label id="AltitudeLabel" x="45" y="53" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
     <label id="BatteryLabel" x="221" y="53" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
     <label id="TempLabel" x="125" y="53" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
-    <label id="DistanceLabel" x="110" y="226" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
+    <label id="DistanceLabel" x="80" y="226" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
     <label id="StepsLabel" x="184" y="226" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
     <label id="StepsGoalLabel" x="50" y="226" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
     <label id="ActiveGoalLabel" x="205" y="226" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />

@@ -196,6 +196,7 @@ class FaceOfFenixView extends WatchUi.WatchFace {
          {
           Distance = (activityMonitorInfo.distance.toDouble()/100);
           DistanceLabel.setText(Lang.format("$1$m",[Distance.format("%1d")]));
+          //DistanceLabel.setText("199.88km");
          }
         else
          {
@@ -206,6 +207,7 @@ class FaceOfFenixView extends WatchUi.WatchFace {
 		StepsLabel.setColor(FontForeground);
         var Steps = activityMonitorInfo.steps;
 		StepsLabel.setText(Lang.format("$1$",[Steps]));			
+		//StepsLabel.setText("99888");
 		
 		var StepsGoalLabel = View.findDrawableById("StepsGoalLabel");
 		StepsGoalLabel.setColor(stepBarColor);
@@ -217,8 +219,7 @@ class FaceOfFenixView extends WatchUi.WatchFace {
 		ActivityGoalLabel.setColor(activeBarColor);
         var ActivityGoal = activityMonitorInfo.activeMinutesWeekGoal;
         var ActivityPercentage = FaceOfFenixApp.calculateStepGoalPercentage(ActivityGoal,activityMonitorInfo.activeMinutesWeek.total);
-		ActivityGoalLabel.setText(Lang.format("$1$",[ActivityPercentage]));			
-		
+		ActivityGoalLabel.setText(Lang.format("$1$",[ActivityPercentage]));		
 			
 		var CaloriesLabel = View.findDrawableById("CaloriesLabel");
 		CaloriesLabel.setColor(FontForeground);
@@ -269,7 +270,7 @@ class FaceOfFenixView extends WatchUi.WatchFace {
 	    FaceOfFenixApp.drawMoveBar(dc, activityMonitorInfo.moveBarLevel,screenSize);
 	    FaceOfFenixApp.drawStepGoalBar(dc, activityMonitorInfo.stepGoal, activityMonitorInfo.steps, stepBarColor,screenSize);
 	    FaceOfFenixApp.drawActiveWeekGoalBar(dc, activityMonitorInfo.activeMinutesWeekGoal, activityMonitorInfo.activeMinutesWeek.total, activeBarColor, screenSize);
-	    //FaceOfFenixApp.drawHRDiagram(dc,hrDiagramColor,screenSize);
+	    FaceOfFenixApp.drawHRDiagram(dc,hrDiagramColor,screenSize);
 	       
 	    
     }
