@@ -11,4 +11,3 @@ This face is inspired by "My Watch" watch face by Benjamin Serant. I thik My Wat
   <img src="Screen.png">
 </p>
 
-![Screen](/Screen.png?raw=true "Screen")
