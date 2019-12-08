@@ -1,21 +1,22 @@
 <layout id="WatchFace280x280">
     <drawable class="Background" />
     <label id="ISOWeekLabel" x="215" y="82" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
-    <label id="DayLabel" x="140" y="76" font="@Fonts.uni0965" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
-    <label id="MonthLabel" x="140" y="88" font="@Fonts.uni0956" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />    
-    <label id="DayNumber" x="134" y="65" font="@Fonts.fabiolo_medium" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
+    <label id="DayLabel" x="140" y="72" font="@Fonts.uni0965" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
+    <label id="MonthLabel" x="140" y="87" font="@Fonts.uni0956" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />    
+    <label id="DayNumber" x="136" y="65" font="@Fonts.fabiolo_medium" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
     <label id="TimeCenteredLabel" x="140" y="80" font="@Fonts.fabiolo_116" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
     <label id="SunsetLabel" x="178" y="36" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
     <label id="SunriseLabel" x="70" y="36" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
     <label id="AltitudeLabel" x="45" y="53" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
     <label id="BatteryLabel" x="221" y="53" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
-    <label id="TempLabel" x="125" y="53" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
+    <label id="TempLabel" x="135" y="53" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
     <label id="DistanceLabel" x="80" y="226" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
     <label id="StepsLabel" x="184" y="226" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
-    <label id="StepsGoalLabel" x="50" y="226" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
+    <label id="StepsGoalLabel" x="45" y="226" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
     <label id="ActiveGoalLabel" x="205" y="226" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
     <label id="CaloriesLabel" x="140" y="245" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
     <label id="CurrentHRLabel" x="240" y="188" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
     <label id="LowestHRLabel" x="62" y="203" font="@Fonts.uni1056" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
     <label id="HighestHRLabel" x="62" y="188" font="@Fonts.uni1056" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
+    <label id="NotificationsLabel" x="62" y="74" font="@Fonts.uni1056" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
 </layout>

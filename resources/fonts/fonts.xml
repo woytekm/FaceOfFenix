@@ -1,9 +1,8 @@
 <fonts>
-	<font id="uni0956" filename="0956.fnt" antialias="true"></font>
-	<font id="uni0965" filename="0965.fnt" antialias="true"></font>
-	<font id="uni1056" filename="1056.fnt" antialias="true"></font>
-	<font id="uni1065" filename="1065.fnt" antialias="true"></font>
-	<font id="fabiolo" filename="fabiolo.fnt" antialias="true"></font>
+	<font id="uni0956" filename="0956.fnt" filter="ABCDEFGHIJKLMNOPRSTUWXYZ "></font> 
+	<font id="uni0965" filename="0965.fnt" filter="ABCDEFGHIJKLMNOPRSTUWXYZ "></font>
+	<font id="uni1056" filename="1056.fnt" filter="0123456789 "></font>
+	<font id="uni1065" filename="1065.fnt" filter="0123456789-m%:KC°() !G.k"></font>
 	<font id="fabiolo_medium" filename="fabiolo_medium.fnt" antialias="true"></font>
 	<font id="fabiolo_100" filename="fabiolo_100.fnt" antialias="true"></font>
 	<font id="fabiolo_116" filename="fabiolo_116.fnt" antialias="true"></font>

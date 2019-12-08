@@ -18,6 +18,8 @@ class FaceOfFenixView extends WatchUi.WatchFace {
     var BatteryIcon;
     var FeetIcon;
     var HeartIcon;
+    var BTIcon;
+    var NotifIcon;
     var screenSize = 240;
     var screenHeight, screenWidth, mySettings;
     var FontForeground = 0xFFFFFF;
@@ -52,10 +54,13 @@ class FaceOfFenixView extends WatchUi.WatchFace {
            setLayout(Rez.Layouts.WatchFace280x280(dc));
            screenSize = 280;
          }
-        
-        MountainIcon = Ui.loadResource(Rez.Drawables.Mountain);
-        FeetIcon = Ui.loadResource(Rez.Drawables.Feet);
-        HeartIcon = Ui.loadResource(Rez.Drawables.Heart);
+         
+         MountainIcon = Ui.loadResource(Rez.Drawables.Mountain);
+         FeetIcon = Ui.loadResource(Rez.Drawables.Feet);
+         HeartIcon = Ui.loadResource(Rez.Drawables.Heart);
+         BTIcon = Ui.loadResource(Rez.Drawables.BT);
+         NotifIcon = Ui.loadResource(Rez.Drawables.Mail);
+  
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -123,29 +128,12 @@ class FaceOfFenixView extends WatchUi.WatchFace {
                 hours = hours.format("%02d");
             }
         }
-        var timeString = Lang.format(timeFormat, [hours, clockTime.min.format("%02d")]);
-
-        // Update the view
-        var TimeLabel;
-        
-        //if( (currHour > 9) || (Application.getApp().getProperty("UseMilitaryFormat")) )
-        // {
-        TimeLabel = View.findDrawableById("TimeCenteredLabel");
-        // }
-        //else
-        // {
-        //  TimeLabel = View.findDrawableById("TimeShiftedLabel");
-        // }
-         
-        TimeLabel.setColor(0xFFFFFF);
-        //TimeLabel.setText("  :  ");
-        TimeLabel.setText(timeString);
+        var timeString = Lang.format(timeFormat, [hours, clockTime.min.format("%02d")]);        
+        FaceOfFenixApp.displayLabel("TimeCenteredLabel",FontForeground,timeString);
        
-        var temp = FaceOfFenixApp.lastTempReading().toNumber();        
-        var TempLabel = View.findDrawableById("TempLabel");
-		TempLabel.setColor(FontForeground);  
-		TempLabel.setText(Lang.format("$1$°",[temp]));
-		
+        var temp = FaceOfFenixApp.lastTempReading().toNumber(); 
+        FaceOfFenixApp.displayLabel("TempLabel",FontForeground,temp.format("%3d")+"°");
+       		
         var now = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
 		var month = now.month;
 		var day_of_week = now.day_of_week;
@@ -154,104 +142,94 @@ class FaceOfFenixView extends WatchUi.WatchFace {
 		                    "JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
 		                    
 		var weekdays = ["SUNDAY","MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY"];                    
-        var DayLabel = View.findDrawableById("DayLabel");
-		DayLabel.setColor(Application.getApp().getProperty("ForegroundColor"));
-		DayLabel.setText(weekdays[day_of_week-1]);
-
-        var MonthLabel = View.findDrawableById("MonthLabel");
-		MonthLabel.setColor(FontForeground);
-		MonthLabel.setText(month_names[month-1]);
+		
+		FaceOfFenixApp.displayLabel("DayLabel",FontForeground,weekdays[day_of_week-1]);
+        FaceOfFenixApp.displayLabel("MonthLabel",FontForeground,month_names[month-1]);
 		
 		var currWeek = FaceOfFenixApp.getCurrentWeekNumber();
-		var currWeekString = Lang.format("($1$)",[currWeek]);
-		
-		var ISOWeekLabel = View.findDrawableById("ISOWeekLabel");
-		ISOWeekLabel.setColor(FontForeground);
-		ISOWeekLabel.setText(currWeekString);
+        FaceOfFenixApp.displayLabel("ISOWeekLabel",FontForeground,"("+currWeek.format("%1d")+")");
 
-        var DayNumberLabel = null;
         var day = now.day;
-		DayNumberLabel = View.findDrawableById("DayNumber");		 
-	    DayNumberLabel.setColor(FontForeground);
-		DayNumberLabel.setText(Lang.format("$1$",[day]));
+        FaceOfFenixApp.displayLabel("DayNumber",FontForeground,day.format("%2d"));
         
-        var AltitudeLabel = View.findDrawableById("AltitudeLabel");
-		AltitudeLabel.setColor(FontForeground);
-        var Altitude = Toybox.Activity.getActivityInfo().altitude.toNumber();		
-		AltitudeLabel.setText(Lang.format("$1$m",[Altitude]));
+        FaceOfFenixApp.displayLabel("AltitudeLabel",FontForeground,Toybox.Activity.getActivityInfo().altitude.format("%4d")+"m");
 		
-		var BatteryLabel = View.findDrawableById("BatteryLabel");
-		BatteryLabel.setColor(FontForeground);
-		//System.println(Application.getApp().getProperty("ForegroundColor"));
-        var batStatus = System.getSystemStats().battery.toNumber();		
-		BatteryLabel.setText(Lang.format("$1$%",[batStatus]));	
+        var batStatus = System.getSystemStats().battery.toNumber();				
+		FaceOfFenixApp.displayLabel("BatteryLabel",FontForeground,batStatus.format("%3d")+"%");
 		BatteryIcon = FaceOfFenixApp.getBatteryIcon(batStatus);	
 		
 		var activityMonitorInfo = Toybox.ActivityMonitor.getInfo();
 		
-		var DistanceLabel = View.findDrawableById("DistanceLabel");
-		DistanceLabel.setColor(FontForeground);
         var Distance = (activityMonitorInfo.distance.toDouble()/100)/1000;
         if(Distance < 1)
          {
           Distance = (activityMonitorInfo.distance.toDouble()/100);
-          DistanceLabel.setText(Lang.format("$1$m",[Distance.format("%1d")]));
+          FaceOfFenixApp.displayLabel("DistanceLabel",FontForeground,Distance.format("%3d")+"m");
           //DistanceLabel.setText("199.88km");
          }
         else
          {
-		   DistanceLabel.setText(Lang.format("$1$km",[Distance.format("%.2f")]));	
+		  FaceOfFenixApp.displayLabel("DistanceLabel",FontForeground,Distance.format("%3.2f")+"km");	
 		 }
-		
-		var StepsLabel = View.findDrawableById("StepsLabel");
-		StepsLabel.setColor(FontForeground);
-        var Steps = activityMonitorInfo.steps;
-		StepsLabel.setText(Lang.format("$1$",[Steps]));			
+	    	
+		FaceOfFenixApp.displayLabel("StepsLabel",FontForeground,activityMonitorInfo.steps.format("%5d"));		
 		//StepsLabel.setText("99888");
 		
-		var StepsGoalLabel = View.findDrawableById("StepsGoalLabel");
-		StepsGoalLabel.setColor(stepBarColor);
-        var StepsGoal = activityMonitorInfo.stepGoal;
-        var StepPercentage = FaceOfFenixApp.calculateStepGoalPercentage(StepsGoal,Steps);
-		StepsGoalLabel.setText(Lang.format("$1$",[StepPercentage]));		
-		
-		var ActivityGoalLabel = View.findDrawableById("ActiveGoalLabel");
-		ActivityGoalLabel.setColor(activeBarColor);
-        var ActivityGoal = activityMonitorInfo.activeMinutesWeekGoal;
-        var ActivityPercentage = FaceOfFenixApp.calculateStepGoalPercentage(ActivityGoal,activityMonitorInfo.activeMinutesWeek.total);
-		ActivityGoalLabel.setText(Lang.format("$1$",[ActivityPercentage]));		
+        var StepPercentage = FaceOfFenixApp.calculateStepGoalPercentage(activityMonitorInfo.stepGoal,activityMonitorInfo.steps);		
+		FaceOfFenixApp.displayLabel("StepsGoalLabel",stepBarColor,StepPercentage.format("%3d"));
+
+        var ActivityPercentage = FaceOfFenixApp.calculateStepGoalPercentage(activityMonitorInfo.activeMinutesWeekGoal,activityMonitorInfo.activeMinutesWeek.total);		
+		FaceOfFenixApp.displayLabel("ActiveGoalLabel",activeBarColor,ActivityPercentage.format("%3d"));
 			
-		var CaloriesLabel = View.findDrawableById("CaloriesLabel");
-		CaloriesLabel.setColor(FontForeground);
-		var Calories = activityMonitorInfo.calories;
-		CaloriesLabel.setText(Lang.format("$1$KC",[Calories]));
+		FaceOfFenixApp.displayLabel("CaloriesLabel",FontForeground,activityMonitorInfo.calories.format("%5d")+"KC");
 				
-		var CurrentHRLabel = View.findDrawableById("CurrentHRLabel");
-		CurrentHRLabel.setColor(FontForeground);
 		var heartRateHistory = ActivityMonitor.getHeartRateHistory(1, true);
 		var CurrentHRSample = heartRateHistory.next();
-        var CurrentHR = CurrentHRSample.heartRate;
-		if((CurrentHRSample == ActivityMonitor.INVALID_HR_SAMPLE) || (CurrentHR == 255))
+		
+		if((CurrentHRSample == ActivityMonitor.INVALID_HR_SAMPLE) || (CurrentHRSample.heartRate == 255))
 		 {
-		  CurrentHRLabel.setText("--");
+		  FaceOfFenixApp.displayLabel("CurrentHRLabel",activeBarColor,"--");
 		 }
 		else
 		 {
-		  //CurrentHRLabel.setText("255");
-		  CurrentHRLabel.setText(Lang.format("$1$",[CurrentHR]));		
+		  FaceOfFenixApp.displayLabel("CurrentHRLabel",FontForeground,CurrentHRSample.heartRate.format("%3d"));	
+		 }
+
+        var btConn = false;
+        var settings = System.getDeviceSettings();
+                
+        if (settings has :connectionInfo) {
+    		btConn = settings.connectionInfo.get(:bluetooth).state == System.CONNECTION_STATE_CONNECTED;
+    	}
+    	else {
+    		btConn = settings.getDeviceSettings().phoneConnected;
+    	}        
+    	
+    	if((settings.notificationCount > 0) && btConn)
+    	 {		
+          FaceOfFenixApp.displayLabel("NotificationsLabel",FontForeground,settings.notificationCount.format("%2d"));
 		 }
 		
-		 
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
         
         if(screenSize == 240)
          {
+
            dc.drawBitmap(105,14,calcMoon());
-           dc.drawBitmap(23,42,MountainIcon);
+           dc.drawBitmap(23,42,MountainIcon);                      
            dc.drawBitmap(184,41,BatteryIcon);
            dc.drawBitmap(160,185,FeetIcon);
            dc.drawBitmap(205,156,HeartIcon);
+           
+           if(btConn)
+            {
+              dc.drawBitmap(17,57,BTIcon);
+              if(settings.notificationCount > 0)
+               { 
+                dc.drawBitmap(55,60,NotifIcon);
+               } 
+            }
          }
         else if(screenSize == 280)
          {
@@ -259,7 +237,18 @@ class FaceOfFenixView extends WatchUi.WatchFace {
            dc.drawBitmap(25,50,MountainIcon);
            dc.drawBitmap(218,50,BatteryIcon);
            dc.drawBitmap(180,220,FeetIcon);
-           dc.drawBitmap(235,183,HeartIcon);        
+           dc.drawBitmap(235,183,HeartIcon); 
+           
+           if(btConn)
+            {
+              dc.drawBitmap(20,69,BTIcon);
+              if(settings.notificationCount > 0)
+               {
+                dc.drawBitmap(58,72,NotifIcon);
+               }
+            }
+ 
+            
          }
         
         if(locationKnown == true)

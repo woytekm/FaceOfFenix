@@ -19,4 +19,5 @@
     <label id="CurrentHRLabel" x="210" y="161" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
     <label id="LowestHRLabel" x="44" y="174" font="@Fonts.uni1056" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
     <label id="HighestHRLabel" x="44" y="161" font="@Fonts.uni1056" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
+    <label id="NotificationsLabel" x="59" y="63" font="@Fonts.uni1056" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
 </layout>

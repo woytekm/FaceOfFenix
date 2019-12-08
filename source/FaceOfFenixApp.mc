@@ -30,8 +30,15 @@ class FaceOfFenixApp extends Application.AppBase {
     function onSettingsChanged() {
         WatchUi.requestUpdate();
     }
-
-
+    
+    
+    function displayLabel(labelName, fgColor, string)
+     {
+        var Label = View.findDrawableById(labelName);
+		Label.setColor(fgColor);
+		Label.setText(string);
+     }
+     
 
     function getBatteryIcon(batteryPercentage) {
    
@@ -330,9 +337,6 @@ class FaceOfFenixApp extends Application.AppBase {
      var FromMidnightTillNight = NightStartMoment.value() - MidnightMoment.value();
      var FromMidnightTillNow = Now.value() - MidnightMoment.value();
      
-     System.println(Now.value());
-     System.println(MidnightMoment.value());
-     
      var dayStartDeg = (FromMidnightTillSunrise.toNumber()/60)/16;
      var dayEndDeg = (FromMidnightTillSunset.toNumber()/60)/16;
      
@@ -340,7 +344,6 @@ class FaceOfFenixApp extends Application.AppBase {
      var nightStartDeg = (FromMidnightTillNight.toNumber()/60)/16;
       
      var nowDeg = (FromMidnightTillNow.toNumber()/60)/16;
-     System.println(nowDeg);
      
      dcObj.setColor(Graphics.COLOR_ORANGE, Graphics.COLOR_BLACK);
      for(var i = 2; i < (diagramWidth-1); i++)
@@ -354,7 +357,14 @@ class FaceOfFenixApp extends Application.AppBase {
         dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramStartDeg-dayStartDeg,diagramStartDeg-dayEndDeg);
       }    
      
-     dcObj.setColor(0xff0000, Graphics.COLOR_BLACK);
+     if((nowDeg > nightEndDeg)&&(nowDeg < nightStartDeg))
+      {
+       dcObj.setColor(0x000000, Graphics.COLOR_BLACK);
+      }
+     else
+      {
+       dcObj.setColor(0xffffff, Graphics.COLOR_BLACK);
+      }
      for(var i = 2; i < (diagramWidth-1); i++)
       {
         dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramStartDeg-nowDeg+1,diagramStartDeg-nowDeg);
@@ -410,7 +420,8 @@ class FaceOfFenixApp extends Application.AppBase {
          
       heartRateSample = heartRateHistory.next();      
       
-      if((heartRateSample == null) || (minValue == null) || (maxValue == null) || (minValue == 255) || (maxValue == 255))
+      if((heartRateSample == null) || (minValue == null) || (maxValue == null) || (minValue == 255) || (maxValue == 255) || 
+         (maxValue == 0) || (minValue == 0))
        {
         return;
        }
@@ -447,7 +458,6 @@ class FaceOfFenixApp extends Application.AppBase {
          if((intervalSum != 0) && (goodSamples != 0))
           { 
            intervalAvg = intervalSum.toDouble() / goodSamples.toDouble();  
-
            //System.println("interval avg:"+intervalAvg);
            //System.println("good samples:"+goodSamples);
            var currIntervalPercentageOfMax = (intervalAvg/maxValue) * 100;

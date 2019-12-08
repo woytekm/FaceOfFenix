@@ -35,24 +35,23 @@ using Toybox.Time.Gregorian;
 using Toybox.Lang;
 
 
-enum {
-    NIGHT_END,
-    NAUTICAL_DAWN,
-    DAWN,
-    BLUE_HOUR_AM,
-    SUNRISE,
-    SUNRISE_END,
-    GOLDEN_HOUR_AM,
-    NOON,
-    GOLDEN_HOUR_PM,
-    SUNSET_START,
-    SUNSET,
-    BLUE_HOUR_PM,
-    DUSK,
-    NAUTICAL_DUSK,
-    NIGHT,
-    NUM_RESULTS
-}
+
+    var NIGHT_END = 0;
+    var NAUTICAL_DAWN = 1;
+    var DAWN = 2;
+    var BLUE_HOUR_AM = 3;
+    var SUNRISE = 4;
+    var SUNRISE_END = 5;
+    var GOLDEN_HOUR_AM = 6;
+    var NOON = 7;
+    var GOLDEN_HOUR_PM = 8;
+    var SUNSET_START = 9;
+    var SUNSET = 10;
+    var BLUE_HOUR_PM = 11;
+    var DUSK = 12;
+    var NAUTICAL_DUSK = 13;
+    var NIGHT = 14;
+    var NUM_RESULTS = 15;
 
 class SunCalc {
 

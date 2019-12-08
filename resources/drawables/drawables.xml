@@ -30,4 +30,6 @@
     <bitmap id="Mountain" filename="mountain.png" />
     <bitmap id="Feet" filename="feet.png" />
     <bitmap id="Heart" filename="heart.png" />
+    <bitmap id="BT" filename="BT.png" />
+    <bitmap id="Mail" filename="mail.png" />
 </drawables>
