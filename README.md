@@ -1,4 +1,4 @@
-Garmin Connect IQ watchface for Garmin Fenix series
+Garmin Connect IQ watch face for Garmin Fenix series
 ===============
 
 
