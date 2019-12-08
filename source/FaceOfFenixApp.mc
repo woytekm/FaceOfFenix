@@ -147,7 +147,7 @@ class FaceOfFenixApp extends Application.AppBase {
       return percentage.toNumber();   
     }
     
-   function drawActiveWeekGoalBar(dcObj, activeMinutesWeekGoal, activeMinutes, color, screenS)
+   function drawActiveWeekGoalBar(dcObj, activeMinutesWeekGoal, activeMinutes, color, screenWidth, screenHeight)
     {
  
  	 var diagramRadius = 0;
@@ -157,11 +157,11 @@ class FaceOfFenixApp extends Application.AppBase {
 	 var diagramStartDeg = diagramEndDeg + diagramLength;
 	 var oneMoveBarSeg = 6;
 	 
-	 if(screenS == 240)
+	 if(screenWidth == 240)
 	  {
 	    diagramRadius = 118;
 	  }
-	 else if(screenS == 280)
+	 else if(screenWidth == 280)
 	  {
 	    diagramRadius = 138;
 	    diagramWidth = 11;
@@ -199,7 +199,7 @@ class FaceOfFenixApp extends Application.AppBase {
     
     }
     
-   function drawStepGoalBar(dcObj, stepGoal, steps, color, screenS)
+   function drawStepGoalBar(dcObj, stepGoal, steps, color, screenWidth, screenHeight)
     {
 	 // 50 degrees to represent % step goal reached for today
 	 
@@ -210,11 +210,11 @@ class FaceOfFenixApp extends Application.AppBase {
 	 var diagramEndDeg = diagramStartDeg - diagramLength;
 	 var oneMoveBarSeg = 6;
 	 
-	  if(screenS == 240)
+	  if(screenWidth == 240)
 	  {
 	    diagramRadius = 118;
 	  }
-	 else if(screenS == 280)
+	 else if(screenWidth == 280)
 	  {
 	    diagramRadius = 138;
 	    diagramWidth = 11;
@@ -241,20 +241,22 @@ class FaceOfFenixApp extends Application.AppBase {
        {
         percentage = 100;
        }
+       
       var barUnit = (diagramStartDeg.toDouble() - diagramEndDeg.toDouble()) / 100;
       var barDegrees = (percentage * barUnit);
+      
       barDegrees = barDegrees.toNumber();
       
       for(var i = 2; i < (diagramWidth-1); i++)
         {
-         dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramStartDeg,diagramStartDeg-barDegrees-1);
+         dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramStartDeg,diagramStartDeg-barDegrees);
         }     
       
       
 	 }
 	 
 	 
-    function drawMoveBar(dcObj,moveBarLevel,screenS)
+    function drawMoveBar(dcObj,moveBarLevel,screenWidth,screenHeight)
 	 {
 	 
 	 // 37 degrees for representing 5 bars = 7 - 2 (show segment boundary) = 5 degrees per segment of move bar
@@ -265,11 +267,11 @@ class FaceOfFenixApp extends Application.AppBase {
 	 var oneMoveBarSeg = 6;
      var colorGradient = [0xff77f0, 0xff77f0, 0xff77f0, 0x8d2496, 0x6a0079];
      
-      if(screenS == 240)
+      if(screenWidth == 240)
 	  {
 	    diagramRadius = 118;
 	  }
-	 else if(screenS == 280)
+	 else if(screenWidth == 280)
 	  {
 	    diagramRadius = 138;
 	    diagramWidth = 11;
@@ -300,7 +302,7 @@ class FaceOfFenixApp extends Application.AppBase {
       	 
 	 }
 	 
-	function drawDaylightDiagram(dcObj,NightEndMoment,SunriseMoment,SunsetMoment,NightStartMoment,MidnightMoment,screenS)
+	function drawDaylightDiagram(dcObj,NightEndMoment,SunriseMoment,SunsetMoment,NightStartMoment,MidnightMoment,screenWidth,screenHeight)
 	{
 	 
 	 // 90 degrees for representing 24 hours = 1440 minutes = 16 minutes/degree
@@ -310,11 +312,11 @@ class FaceOfFenixApp extends Application.AppBase {
 	 var diagramStartDeg = 135;
 	 var diagramEndDeg = 45;
 	 
-	 if(screenS == 240)
+	 if(screenWidth == 240)
 	  {
 	    diagramRadius = 118;
 	  }
-	 else if(screenS == 280)
+	 else if(screenWidth == 280)
 	  {
 	    diagramRadius = 138;
 	    diagramWidth = 11;

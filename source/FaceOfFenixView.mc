@@ -20,39 +20,36 @@ class FaceOfFenixView extends WatchUi.WatchFace {
     var HeartIcon;
     var BTIcon;
     var NotifIcon;
-    var screenSize = 240;
-    var screenHeight, screenWidth, mySettings;
+    var mySettings;
     var FontForeground = 0xFFFFFF;
     var stepBarColor = 0x42c6ff;
     var activeBarColor = 0x00cf1b;
     var hrDiagramColor = 0xe3000b;
+    var midnightEpoch = 0;
     
     function initialize() {
         WatchFace.initialize();
         
         var isColorSet = Application.getApp().getProperty("ForegroundColor");
+        
         if(isColorSet == null)
          {
            Application.getApp().setProperty("ForegroundColor","0xFFFFFF");
          }
         
         mySettings = System.getDeviceSettings();
-        screenHeight = mySettings.screenHeight;
-        screenWidth = mySettings.screenWidth;
         
     }
 
     // Load your resources here
     function onLayout(dc) {
-        if(screenHeight == 240)
+        if(mySettings.screenHeight == 240)
          { 
            setLayout(Rez.Layouts.WatchFace240x240(dc));
-           screenSize = 240;
          }
-        else if(screenHeight == 280)
+        else if(mySettings.screenHeight == 280)
          { 
            setLayout(Rez.Layouts.WatchFace280x280(dc));
-           screenSize = 280;
          }
          
          MountainIcon = Ui.loadResource(Rez.Drawables.Mountain);
@@ -83,18 +80,13 @@ class FaceOfFenixView extends WatchUi.WatchFace {
         var NightEndMoment = null;
         var NightStartMoment = null;
         
-      	var SunriseLabel = View.findDrawableById("SunriseLabel");
-		SunriseLabel.setColor(FontForeground);  
-    	var SunsetLabel = View.findDrawableById("SunsetLabel");
-		SunsetLabel.setColor(FontForeground);
-
         var curLoc = getCurrentLocation();	
         
         if(curLoc == null)
          {	
            locationKnown = false;
-           SunriseLabel.setText("!G  ");
-           SunsetLabel.setText("    ");
+           FaceOfFenixApp.displayLabel("SunriseLabel",FontForeground,"!G  ");
+           FaceOfFenixApp.displayLabel("SunsetLabel",FontForeground,"    ");
           }
         else
          {
@@ -103,12 +95,23 @@ class FaceOfFenixView extends WatchUi.WatchFace {
 		   SunriseTimeString = getSunriseTimeString(SunriseMoment);
 		   SunsetMoment = getSunsetMoment(curLoc);
 		   SunsetTimeString = getSunsetTimeString(SunsetMoment);
-		   MidnightMoment = getTodayMidnightMoment();
-		
+		   
+		   // Account for Gregorian.Moment daylight saving bug. Get saved time instead of using buggy Gregorian.Moment if possible.
+		   
+		   if(midnightEpoch == 0)
+		    {
+		      MidnightMoment = getTodayMidnightMoment();
+		    }
+		   else
+		    {
+		      MidnightMoment = midnightEpoch;
+		    }
+		     
 		   NightEndMoment = getNightEndMoment(curLoc);
 		   NightStartMoment = getNightStartMoment(curLoc);
-           SunriseLabel.setText(SunriseTimeString);
-           SunsetLabel.setText(SunsetTimeString);         
+		   
+		   FaceOfFenixApp.displayLabel("SunriseLabel",FontForeground,SunriseTimeString);
+		   FaceOfFenixApp.displayLabel("SunsetLabel",FontForeground,SunsetTimeString);
           }
           
         
@@ -117,7 +120,6 @@ class FaceOfFenixView extends WatchUi.WatchFace {
         var timeFormat = "$1$:$2$";
         var clockTime = System.getClockTime();
         var hours = clockTime.hour;
-        var currHour = hours;
         if (!System.getDeviceSettings().is24Hour) {
             if (hours > 12) {
                 hours = hours - 12;
@@ -128,6 +130,14 @@ class FaceOfFenixView extends WatchUi.WatchFace {
                 hours = hours.format("%02d");
             }
         }
+        
+        // if midnight - save epoch
+        
+        if((clockTime.hour == 0) && (clockTime.min == 0))
+         {
+           midnightEpoch = Time.now().value;
+         }
+        
         var timeString = Lang.format(timeFormat, [hours, clockTime.min.format("%02d")]);        
         FaceOfFenixApp.displayLabel("TimeCenteredLabel",FontForeground,timeString);
        
@@ -213,7 +223,7 @@ class FaceOfFenixView extends WatchUi.WatchFace {
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
         
-        if(screenSize == 240)
+        if(mySettings.screenHeight == 240)
          {
 
            dc.drawBitmap(105,14,calcMoon());
@@ -231,7 +241,7 @@ class FaceOfFenixView extends WatchUi.WatchFace {
                } 
             }
          }
-        else if(screenSize == 280)
+        else if(mySettings.screenHeight == 280)
          {
            dc.drawBitmap(126,17,calcMoon());
            dc.drawBitmap(25,50,MountainIcon);
@@ -253,15 +263,14 @@ class FaceOfFenixView extends WatchUi.WatchFace {
         
         if(locationKnown == true)
          {
-	      FaceOfFenixApp.drawDaylightDiagram(dc,NightEndMoment,SunriseMoment,SunsetMoment,NightStartMoment,MidnightMoment,screenSize);
+	      FaceOfFenixApp.drawDaylightDiagram(dc,NightEndMoment,SunriseMoment,SunsetMoment,NightStartMoment,MidnightMoment,mySettings.screenWidth,mySettings.screenHeight);
 	     }
 	     
-	    FaceOfFenixApp.drawMoveBar(dc, activityMonitorInfo.moveBarLevel,screenSize);
-	    FaceOfFenixApp.drawStepGoalBar(dc, activityMonitorInfo.stepGoal, activityMonitorInfo.steps, stepBarColor,screenSize);
-	    FaceOfFenixApp.drawActiveWeekGoalBar(dc, activityMonitorInfo.activeMinutesWeekGoal, activityMonitorInfo.activeMinutesWeek.total, activeBarColor, screenSize);
-	    FaceOfFenixApp.drawHRDiagram(dc,hrDiagramColor,screenSize,View,FontForeground);
-	       
-	    
+	    FaceOfFenixApp.drawMoveBar(dc, activityMonitorInfo.moveBarLevel,mySettings.screenWidth,mySettings.screenHeight);
+	    FaceOfFenixApp.drawStepGoalBar(dc, activityMonitorInfo.stepGoal, activityMonitorInfo.steps, stepBarColor,mySettings.screenWidth,mySettings.screenHeight);
+	    FaceOfFenixApp.drawActiveWeekGoalBar(dc, activityMonitorInfo.activeMinutesWeekGoal, activityMonitorInfo.activeMinutesWeek.total, activeBarColor, mySettings.screenWidth,mySettings.screenHeight);
+	    FaceOfFenixApp.drawHRDiagram(dc,hrDiagramColor,mySettings.screenWidth,View,FontForeground);
+	     
     }
 
     // Called when this View is removed from the screen. Save the
