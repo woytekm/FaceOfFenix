@@ -170,8 +170,7 @@ function getCurrentLocation()
      
    }  
  
-
-function getNightEndMoment(curLoc)
+function getSunMoment(curLoc,MomentType)
  {
     if(curLoc == null)
       { return null;}      
@@ -179,88 +178,40 @@ function getNightEndMoment(curLoc)
     var lat = curLoc.toRadians()[0]; 
     var today = new Time.Moment(Time.today().value());
     var SunCalculator = new SunCalc();
-    var SunsetMoment = SunCalculator.calculate(today, lat, long, NIGHT_END);   
- 
-    return SunsetMoment;
- }
- 
-function getNightStartMoment(curLoc)
- {
-    if(curLoc == null)
-      { return null;}      
-    var long = curLoc.toRadians()[1]; 
-    var lat = curLoc.toRadians()[0]; 
-    var today = new Time.Moment(Time.today().value());
-    var SunCalculator = new SunCalc();
-    var SunsetMoment = SunCalculator.calculate(today, lat, long, NIGHT);   
- 
+    var SunsetMoment = SunCalculator.calculate(today, lat, long, MomentType);    
     return SunsetMoment;
  }
  
 
-function getSunsetMoment(curLoc)
+function getEventTimeString(Moment)
  {
-    if(curLoc == null)
-      { return null;}      
-    var long = curLoc.toRadians()[1]; 
-    var lat = curLoc.toRadians()[0]; 
-    var today = new Time.Moment(Time.today().value());
-    var SunCalculator = new SunCalc();
-    var SunsetMoment = SunCalculator.calculate(today, lat, long, SUNSET);   
- 
-    return SunsetMoment;
- }
- 
-
-function getSunsetTimeString(SunsetMoment)
- {
-    if(SunsetMoment == null)
+    if(Moment == null)
      {return " ";}
-    var SunsetTime = Gregorian.info(SunsetMoment, Time.FORMAT_MEDIUM);
-    SunsetTime.min = SunsetTime.min.format("%02d");
-    var SunsetTimeStr = Lang.format("$1$:$2$",[SunsetTime.hour, SunsetTime.min]);
-    return SunsetTimeStr;
+    var EventTime = Gregorian.info(Moment, Time.FORMAT_MEDIUM);
+    EventTime.min = EventTime.min.format("%02d");
+    var EventTimeStr = Lang.format("$1$:$2$",[EventTime.hour, EventTime.min]);
+    return EventTimeStr;
  }
 
-function getSunriseMoment(curLoc)
- {
-    if(curLoc == null)
-     { return null;}   
-    var long = curLoc.toRadians()[1]; 
-    var lat = curLoc.toRadians()[0]; 
-    var today = new Time.Moment(Time.today().value());
-    var SunCalculator = new SunCalc();
-    var SunriseMoment = SunCalculator.calculate(today, lat, long, SUNRISE);  
-    return SunriseMoment;
- }
- 
-function getSunriseTimeString(SunriseMoment)
- {
-    if(SunriseMoment == null)
-     {return "!G";}
-    var SunriseTime = Gregorian.info(SunriseMoment, Time.FORMAT_MEDIUM); 
-    SunriseTime.min = SunriseTime.min.format("%02d");
-    var SunriseTimeStr = Lang.format("$1$:$2$",[SunriseTime.hour, SunriseTime.min]);
-    return SunriseTimeStr;  
- }
- 
-function getTodayMidnightMoment()
- {
- 
-   var NowMoment = new Time.Moment(Time.today().value());
-   var NowGregorianInfo = Gregorian.info(NowMoment, Time.FORMAT_MEDIUM);
- 
-   var todayMidnight = {
-    :year   => NowGregorianInfo.year,
-    :month  => NowGregorianInfo.month, // 3.x devices can also use :month => Gregorian.MONTH_MAY
-    :day    => NowGregorianInfo.day,
-    :hour   => 0,  // here we have a problem with daylight saving - looks like a Connect IQ bug
-    :minute => 0,
-    :second => 0
-    };
   
-   var MidnightMoment = Gregorian.moment(todayMidnight);
-
-   return MidnightMoment;
-
- }
+//function getTodayMidnightMoment()
+// {
+// 
+//   var NowMoment = new Time.Moment(Time.today().value());
+//   var NowGregorianInfo = Gregorian.info(NowMoment, Time.FORMAT_MEDIUM);
+// 
+//   var todayMidnight = {
+//    :year   => NowGregorianInfo.year,
+//    :month  => NowGregorianInfo.month, // 3.x devices can also use :month => Gregorian.MONTH_MAY
+//    :day    => NowGregorianInfo.day,
+//    :hour   => 0,  // here we have a problem with daylight saving - looks like a Connect IQ bug
+//    :minute => 0,
+//    :second => 0
+//    };
+//  
+//   var MidnightMoment = Gregorian.moment(todayMidnight);
+//   
+//   
+//   return MidnightMoment;
+//
+// }

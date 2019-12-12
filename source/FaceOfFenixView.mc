@@ -91,30 +91,19 @@ class FaceOfFenixView extends WatchUi.WatchFace {
         else
          {
            locationKnown = true;
-		   SunriseMoment = getSunriseMoment(curLoc);
-		   SunriseTimeString = getSunriseTimeString(SunriseMoment);
-		   SunsetMoment = getSunsetMoment(curLoc);
-		   SunsetTimeString = getSunsetTimeString(SunsetMoment);
+		   SunriseMoment = getSunMoment(curLoc,SUNRISE);
+		   SunriseTimeString = getEventTimeString(SunriseMoment);
+		   SunsetMoment = getSunMoment(curLoc,SUNSET);
+		   SunsetTimeString = getEventTimeString(SunsetMoment);
 		   
-		   // Account for Gregorian.Moment daylight saving bug. Get saved time instead of using buggy Gregorian.Moment if possible.
-		   
-		   if(midnightEpoch == 0)
-		    {
-		      MidnightMoment = getTodayMidnightMoment();
-		    }
-		   else
-		    {
-		      MidnightMoment = midnightEpoch;
-		    }
+		   MidnightMoment = Time.today();
 		     
-		   NightEndMoment = getNightEndMoment(curLoc);
-		   NightStartMoment = getNightStartMoment(curLoc);
+		   NightEndMoment = getSunMoment(curLoc,NIGHT_END);
+		   NightStartMoment = getSunMoment(curLoc,NIGHT);
 		   
 		   FaceOfFenixApp.displayLabel("SunriseLabel",FontForeground,SunriseTimeString);
 		   FaceOfFenixApp.displayLabel("SunsetLabel",FontForeground,SunsetTimeString);
-          }
-          
-        
+          }       
      
         // Get the current time and format it correctly
         var timeFormat = "$1$:$2$";
@@ -133,10 +122,10 @@ class FaceOfFenixView extends WatchUi.WatchFace {
         
         // if midnight - save epoch
         
-        if((clockTime.hour == 0) && (clockTime.min == 0))
-         {
-           midnightEpoch = Time.now().value;
-         }
+        //if((clockTime.hour == 0) && (clockTime.min == 0))
+        // {
+        //   midnightEpoch = Time.now().value;
+        // }
         
         var timeString = Lang.format(timeFormat, [hours, clockTime.min.format("%02d")]);        
         FaceOfFenixApp.displayLabel("TimeCenteredLabel",FontForeground,timeString);
@@ -268,7 +257,7 @@ class FaceOfFenixView extends WatchUi.WatchFace {
 	     
 	    FaceOfFenixApp.drawMoveBar(dc, activityMonitorInfo.moveBarLevel,mySettings.screenWidth,mySettings.screenHeight);
 	    FaceOfFenixApp.drawStepGoalBar(dc, activityMonitorInfo.stepGoal, activityMonitorInfo.steps, stepBarColor,mySettings.screenWidth,mySettings.screenHeight);
-	    FaceOfFenixApp.drawActiveWeekGoalBar(dc, activityMonitorInfo.activeMinutesWeekGoal, activityMonitorInfo.activeMinutesWeek.total, activeBarColor, mySettings.screenWidth,mySettings.screenHeight);
+	    FaceOfFenixApp.drawActiveWeekGoalBar(dc, activityMonitorInfo.activeMinutesWeekGoal, activityMonitorInfo.activeMinutesWeek.total,activeBarColor,mySettings.screenWidth,mySettings.screenHeight);
 	    FaceOfFenixApp.drawHRDiagram(dc,hrDiagramColor,mySettings.screenWidth,View,FontForeground);
 	     
     }

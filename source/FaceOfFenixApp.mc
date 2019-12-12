@@ -40,7 +40,7 @@ class FaceOfFenixApp extends Application.AppBase {
      }
      
 
-    function getBatteryIcon(batteryPercentage) {
+   function getBatteryIcon(batteryPercentage) {
    
     var BatteryIcon;
     
@@ -93,7 +93,7 @@ class FaceOfFenixApp extends Application.AppBase {
 
     }     
 
-    function lastTempReading() {
+   function lastTempReading() {
     
       if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getTemperatureHistory)) 
        {
@@ -107,7 +107,8 @@ class FaceOfFenixApp extends Application.AppBase {
        }
     }
 
-	function getCurrentWeekNumber() {
+   function getCurrentWeekNumber() 
+	{
 	    
     var now = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
     
@@ -249,7 +250,7 @@ class FaceOfFenixApp extends Application.AppBase {
       
       for(var i = 2; i < (diagramWidth-1); i++)
         {
-         dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramStartDeg,diagramStartDeg-barDegrees);
+         dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramStartDeg,diagramStartDeg-barDegrees-1);
         }     
       
       
@@ -301,8 +302,9 @@ class FaceOfFenixApp extends Application.AppBase {
       }
       	 
 	 }
-	 
-	function drawDaylightDiagram(dcObj,NightEndMoment,SunriseMoment,SunsetMoment,NightStartMoment,MidnightMoment,screenWidth,screenHeight)
+
+ 
+   function drawDaylightDiagram(dcObj,NightEndMoment,SunriseMoment,SunsetMoment,NightStartMoment,MidnightMoment,screenWidth,screenHeight)
 	{
 	 
 	 // 90 degrees for representing 24 hours = 1440 minutes = 16 minutes/degree
@@ -331,7 +333,7 @@ class FaceOfFenixApp extends Application.AppBase {
         dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramStartDeg,diagramStartDeg-1);
         dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramEndDeg+1,diagramEndDeg);
       }
-     
+          
      var Now = Time.now();
      var FromMidnightTillSunrise = SunriseMoment.value() - MidnightMoment.value();
      var FromMidnightTillSunset = SunsetMoment.value() - MidnightMoment.value();
@@ -354,6 +356,7 @@ class FaceOfFenixApp extends Application.AppBase {
       }    
         
      dcObj.setColor(0xff8400, Graphics.COLOR_BLACK);
+     
      for(var i = 2; i < (diagramWidth-1); i++)
       {
         dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramStartDeg-dayStartDeg,diagramStartDeg-dayEndDeg);
