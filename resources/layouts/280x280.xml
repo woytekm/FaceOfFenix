@@ -16,7 +16,7 @@
     <label id="ActiveGoalLabel" x="205" y="226" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
     <label id="CaloriesLabel" x="140" y="245" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
     <label id="CurrentHRLabel" x="240" y="188" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
-    <label id="LowestHRLabel" x="62" y="203" font="@Fonts.uni1056" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
-    <label id="HighestHRLabel" x="62" y="188" font="@Fonts.uni1056" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
-    <label id="NotificationsLabel" x="62" y="74" font="@Fonts.uni1056" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
+    <label id="LowestHRLabel" x="62" y="203" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
+    <label id="HighestHRLabel" x="62" y="188" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
+    <label id="NotificationsLabel" x="62" y="74" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
 </layout>

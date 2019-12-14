@@ -5,7 +5,6 @@
     <label id="MonthLabel" x="118" y="74" font="@Fonts.uni0956" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />    
     <label id="DayNumber" x="114" y="52" font="@Fonts.fabiolo_medium" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
     <label id="TimeCenteredLabel" x="center" y="center" font="@Fonts.fabiolo_100" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
-    <label id="TimeShiftedLabel" x="140" y="center" font="@Fonts.fabiolo_100" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
     <label id="SunsetLabel" x="144" y="28" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
     <label id="SunriseLabel" x="66" y="28" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
     <label id="AltitudeLabel" x="45" y="45" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
@@ -17,7 +16,7 @@
     <label id="ActiveGoalLabel" x="182" y="192" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_WHITE" />
     <label id="CaloriesLabel" x="120" y="208" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
     <label id="CurrentHRLabel" x="210" y="161" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
-    <label id="LowestHRLabel" x="44" y="174" font="@Fonts.uni1056" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
-    <label id="HighestHRLabel" x="44" y="161" font="@Fonts.uni1056" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
-    <label id="NotificationsLabel" x="59" y="63" font="@Fonts.uni1056" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
+    <label id="LowestHRLabel" x="45" y="174" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
+    <label id="HighestHRLabel" x="45" y="161" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
+    <label id="NotificationsLabel" x="59" y="63" font="@Fonts.uni1065" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_WHITE" />
 </layout>

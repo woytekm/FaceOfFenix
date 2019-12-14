@@ -23,22 +23,13 @@ class FaceOfFenixView extends WatchUi.WatchFace {
     var mySettings;
     var FontForeground = 0xFFFFFF;
     var stepBarColor = 0x42c6ff;
+    var floorBarColor = 0xfbff05;
     var activeBarColor = 0x00cf1b;
     var hrDiagramColor = 0xe3000b;
-    var midnightEpoch = 0;
     
     function initialize() {
-        WatchFace.initialize();
-        
-        var isColorSet = Application.getApp().getProperty("ForegroundColor");
-        
-        if(isColorSet == null)
-         {
-           Application.getApp().setProperty("ForegroundColor","0xFFFFFF");
-         }
-        
+        WatchFace.initialize();        
         mySettings = System.getDeviceSettings();
-        
     }
 
     // Load your resources here
@@ -57,7 +48,6 @@ class FaceOfFenixView extends WatchUi.WatchFace {
          HeartIcon = Ui.loadResource(Rez.Drawables.Heart);
          BTIcon = Ui.loadResource(Rez.Drawables.BT);
          NotifIcon = Ui.loadResource(Rez.Drawables.Mail);
-  
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -66,7 +56,6 @@ class FaceOfFenixView extends WatchUi.WatchFace {
     function onShow() {
  
     }
-
         
     // Update the view
     function onUpdate(dc) {
@@ -91,30 +80,19 @@ class FaceOfFenixView extends WatchUi.WatchFace {
         else
          {
            locationKnown = true;
-		   SunriseMoment = getSunriseMoment(curLoc);
-		   SunriseTimeString = getSunriseTimeString(SunriseMoment);
-		   SunsetMoment = getSunsetMoment(curLoc);
-		   SunsetTimeString = getSunsetTimeString(SunsetMoment);
+		   SunriseMoment = getSunMoment(curLoc,SUNRISE);
+		   SunriseTimeString = getEventTimeString(SunriseMoment);
+		   SunsetMoment = getSunMoment(curLoc,SUNSET);
+		   SunsetTimeString = getEventTimeString(SunsetMoment);
 		   
-		   // Account for Gregorian.Moment daylight saving bug. Get saved time instead of using buggy Gregorian.Moment if possible.
-		   
-		   if(midnightEpoch == 0)
-		    {
-		      MidnightMoment = getTodayMidnightMoment();
-		    }
-		   else
-		    {
-		      MidnightMoment = midnightEpoch;
-		    }
+		   MidnightMoment = Time.today();
 		     
-		   NightEndMoment = getNightEndMoment(curLoc);
-		   NightStartMoment = getNightStartMoment(curLoc);
+		   NightEndMoment = getSunMoment(curLoc,NIGHT_END);
+		   NightStartMoment = getSunMoment(curLoc,NIGHT);
 		   
 		   FaceOfFenixApp.displayLabel("SunriseLabel",FontForeground,SunriseTimeString);
 		   FaceOfFenixApp.displayLabel("SunsetLabel",FontForeground,SunsetTimeString);
-          }
-          
-        
+          }       
      
         // Get the current time and format it correctly
         var timeFormat = "$1$:$2$";
@@ -131,17 +109,11 @@ class FaceOfFenixView extends WatchUi.WatchFace {
             }
         }
         
-        // if midnight - save epoch
-        
-        if((clockTime.hour == 0) && (clockTime.min == 0))
-         {
-           midnightEpoch = Time.now().value;
-         }
-        
         var timeString = Lang.format(timeFormat, [hours, clockTime.min.format("%02d")]);        
         FaceOfFenixApp.displayLabel("TimeCenteredLabel",FontForeground,timeString);
        
-        var temp = FaceOfFenixApp.lastTempReading().toNumber(); 
+        var sensorIter = Toybox.SensorHistory.getTemperatureHistory({});
+        var temp = sensorIter.next().data.toNumber(); 
         FaceOfFenixApp.displayLabel("TempLabel",FontForeground,temp.format("%3d")+"°");
        		
         var now = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
@@ -171,19 +143,18 @@ class FaceOfFenixView extends WatchUi.WatchFace {
 		var activityMonitorInfo = Toybox.ActivityMonitor.getInfo();
 		
         var Distance = (activityMonitorInfo.distance.toDouble()/100)/1000;
+        
         if(Distance < 1)
          {
           Distance = (activityMonitorInfo.distance.toDouble()/100);
           FaceOfFenixApp.displayLabel("DistanceLabel",FontForeground,Distance.format("%3d")+"m");
-          //DistanceLabel.setText("199.88km");
          }
         else
          {
 		  FaceOfFenixApp.displayLabel("DistanceLabel",FontForeground,Distance.format("%3.2f")+"km");	
 		 }
 	    	
-		FaceOfFenixApp.displayLabel("StepsLabel",FontForeground,activityMonitorInfo.steps.format("%5d"));		
-		//StepsLabel.setText("99888");
+		FaceOfFenixApp.displayLabel("StepsLabel",FontForeground,activityMonitorInfo.steps.format("%5d"));
 		
         var StepPercentage = FaceOfFenixApp.calculateStepGoalPercentage(activityMonitorInfo.stepGoal,activityMonitorInfo.steps);		
 		FaceOfFenixApp.displayLabel("StepsGoalLabel",stepBarColor,StepPercentage.format("%3d"));
@@ -194,11 +165,12 @@ class FaceOfFenixView extends WatchUi.WatchFace {
 		FaceOfFenixApp.displayLabel("CaloriesLabel",FontForeground,activityMonitorInfo.calories.format("%5d")+"KC");
 				
 		var heartRateHistory = ActivityMonitor.getHeartRateHistory(1, true);
+		
 		var CurrentHRSample = heartRateHistory.next();
 		
 		if((CurrentHRSample == ActivityMonitor.INVALID_HR_SAMPLE) || (CurrentHRSample.heartRate == 255))
 		 {
-		  FaceOfFenixApp.displayLabel("CurrentHRLabel",activeBarColor,"--");
+		  FaceOfFenixApp.displayLabel("CurrentHRLabel",FontForeground,"--");
 		 }
 		else
 		 {
@@ -222,6 +194,7 @@ class FaceOfFenixView extends WatchUi.WatchFace {
 		
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
+  
         
         if(mySettings.screenHeight == 240)
          {
@@ -267,8 +240,8 @@ class FaceOfFenixView extends WatchUi.WatchFace {
 	     }
 	     
 	    FaceOfFenixApp.drawMoveBar(dc, activityMonitorInfo.moveBarLevel,mySettings.screenWidth,mySettings.screenHeight);
-	    FaceOfFenixApp.drawStepGoalBar(dc, activityMonitorInfo.stepGoal, activityMonitorInfo.steps, stepBarColor,mySettings.screenWidth,mySettings.screenHeight);
-	    FaceOfFenixApp.drawActiveWeekGoalBar(dc, activityMonitorInfo.activeMinutesWeekGoal, activityMonitorInfo.activeMinutesWeek.total, activeBarColor, mySettings.screenWidth,mySettings.screenHeight);
+	    FaceOfFenixApp.drawStepGoalBar(dc,activityMonitorInfo.stepGoal, activityMonitorInfo.steps,activityMonitorInfo.floorsClimbedGoal,activityMonitorInfo.floorsClimbed,stepBarColor,floorBarColor,mySettings.screenWidth,mySettings.screenHeight);
+	    FaceOfFenixApp.drawActiveWeekGoalBar(dc,activityMonitorInfo.activeMinutesWeekGoal,activityMonitorInfo.activeMinutesWeek.total,activeBarColor,mySettings.screenWidth,mySettings.screenHeight);
 	    FaceOfFenixApp.drawHRDiagram(dc,hrDiagramColor,mySettings.screenWidth,View,FontForeground);
 	     
     }
