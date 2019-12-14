@@ -93,20 +93,6 @@ class FaceOfFenixApp extends Application.AppBase {
 
     }     
 
-   function lastTempReading() {
-    
-      if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getTemperatureHistory)) 
-       {
-        // Set up the method with parameters
-        var sensorIter = Toybox.SensorHistory.getTemperatureHistory({});
-        return sensorIter.next().data;
-       }
-      else
-       { 
-        return null;
-       }
-    }
-
    function getCurrentWeekNumber() 
 	{
 	    
@@ -200,7 +186,7 @@ class FaceOfFenixApp extends Application.AppBase {
     
     }
     
-   function drawStepGoalBar(dcObj, stepGoal, steps, color, screenWidth, screenHeight)
+   function drawStepGoalBar(dcObj, stepGoal, steps, floorsGoal, floors, color, floorColor, screenWidth, screenHeight)
     {
 	 // 50 degrees to represent % step goal reached for today
 	 
@@ -233,26 +219,67 @@ class FaceOfFenixApp extends Application.AppBase {
       
       if((stepGoal == 0) || (steps == 0))
        {
-         return;
+         
        }
+      else
+       { 
+        var percentage = (steps.toDouble() / stepGoal.toDouble()) * 100;
+        percentage = percentage.toNumber();
+        if(percentage > 99)
+         {
+          percentage = 100;
+         }
        
-      var percentage = (steps.toDouble() / stepGoal.toDouble()) * 100;
-      percentage = percentage.toNumber();
-      if(percentage > 99)
-       {
-        percentage = 100;
-       }
+        var barUnit = (diagramStartDeg.toDouble() - diagramEndDeg.toDouble()) / 100;
+        var barDegrees = (percentage * barUnit);
+      
+        barDegrees = barDegrees.toNumber();
+        
+        var diagramEnd;
+        
+        if(Application.getApp().getProperty("ShowFloorsWithSteps"))
+         {
+           diagramEnd = (diagramWidth/2)+1;
+         }
+        else
+         {
+           diagramEnd = (diagramWidth-1);
+         }
+         
+        for(var i = 2; i < diagramEnd; i++)
+         {
+          dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,(diagramStartDeg-1),(diagramStartDeg-1)-barDegrees-1);
+         }  
+            
+        }
        
-      var barUnit = (diagramStartDeg.toDouble() - diagramEndDeg.toDouble()) / 100;
-      var barDegrees = (percentage * barUnit);
-      
-      barDegrees = barDegrees.toNumber();
-      
-      for(var i = 2; i < (diagramWidth-1); i++)
+       if(Application.getApp().getProperty("ShowFloorsWithSteps"))
         {
-         dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramStartDeg,diagramStartDeg-barDegrees-1);
-        }     
+         if((floorsGoal == 0) || (floors == 0))
+          {}
+         else
+          {
+           var percentage = (floors.toDouble() / floorsGoal.toDouble()) * 100;
+           percentage = percentage.toNumber();
+           if(percentage > 99)
+            {
+             percentage = 100;
+            }
+                     
+          var barUnit = (diagramStartDeg.toDouble() - diagramEndDeg.toDouble()) / 100;
+          var barDegrees = (percentage * barUnit);
       
+          barDegrees = barDegrees.toNumber();
+      
+          dcObj.setColor(floorColor, Graphics.COLOR_BLACK);
+          
+          for(var i = (diagramWidth/2)+1; i < (diagramWidth-1); i++)
+           {
+            dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,(diagramStartDeg-1),(diagramStartDeg-1)-barDegrees-1);
+           }     
+         
+          }
+        }
       
 	 }
 	 
@@ -375,7 +402,6 @@ class FaceOfFenixApp extends Application.AppBase {
         dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramStartDeg-nowDeg+1,diagramStartDeg-nowDeg);
       }     
      
-     
     }
     
    function drawHRDiagram(dcObj,color,screenS,View,FontForeground)
@@ -402,7 +428,7 @@ class FaceOfFenixApp extends Application.AppBase {
        }
       else if(screenS == 240)
        {
-         xStart = 185; 
+         xStart = 187; 
          barBase = 190;
          barGap = 2;
          barWidth = 4;
@@ -462,13 +488,10 @@ class FaceOfFenixApp extends Application.AppBase {
          
          if((intervalSum != 0) && (goodSamples != 0))
           { 
+          
            intervalAvg = intervalSum.toDouble() / goodSamples.toDouble();  
-           //System.println("interval avg:"+intervalAvg);
-           //System.println("good samples:"+goodSamples);
            var currIntervalPercentageOfMax = (intervalAvg/maxValue) * 100;
-           currIntervalPercentageOfMax = currIntervalPercentageOfMax.toNumber();
-           //System.println("curr interval percentage of max value:"+currIntervalPercentageOfMax);
-           
+           currIntervalPercentageOfMax = currIntervalPercentageOfMax.toNumber();           
            pixelHeight = 0;
            
            if(currIntervalPercentageOfMax > 0)
