@@ -237,7 +237,13 @@ class FaceOfFenixApp extends Application.AppBase {
          }
        
         var barUnit = (diagramStartDeg.toDouble() - diagramEndDeg.toDouble()) / 100;
-        var barDegrees = (percentage * barUnit);
+
+        var barDegrees = (percentage * barUnit) - 1;
+
+        if(barDegrees < 1)
+         {
+          barDegrees = 1;
+         }
       
         barDegrees = barDegrees.toNumber();
         

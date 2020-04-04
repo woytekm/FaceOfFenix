@@ -178,8 +178,17 @@ function getSunMoment(curLoc,MomentType)
     var lat = curLoc.toRadians()[0]; 
     var today = new Time.Moment(Time.today().value());
     var SunCalculator = new SunCalc();
-    var SunsetMoment = SunCalculator.calculate(today, lat, long, MomentType);    
-    return SunsetMoment;
+    var CalculatedMoment = SunCalculator.calculate(today, lat, long, MomentType);
+
+    // Little ugly hack to fix SunCalc bug - it returns values for yesterday if daylight saving is off. I have no idea why, and i don't intend to find out.
+    if(CalculatedMoment.value() < today.value())
+      {
+        today = new Time.Moment(Time.today().value()+Time.Gregorian.SECONDS_PER_DAY);
+        CalculatedMoment = SunCalculator.calculate(today, lat, long, MomentType);
+      }
+
+    return CalculatedMoment;
+
  }
  
 
