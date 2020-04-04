@@ -176,7 +176,13 @@ class FaceOfFenixApp extends Application.AppBase {
         percentage = 100;
        }
       var barUnit = (diagramStartDeg.toDouble() - diagramEndDeg.toDouble()) / 100;
-      var barDegrees = (percentage * barUnit);
+
+      var barDegrees = ((percentage * barUnit)-1);
+        if(barDegrees < 1)
+         {
+          barDegrees = 1;
+         }
+
       barDegrees = barDegrees.toNumber();
       
       for(var i = 2; i < (diagramWidth-1); i++)
@@ -248,7 +254,7 @@ class FaceOfFenixApp extends Application.AppBase {
          
         for(var i = 2; i < diagramEnd; i++)
          {
-          dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,(diagramStartDeg-1),(diagramStartDeg-1)-barDegrees-1);
+          dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,(diagramStartDeg-1),(diagramStartDeg-1)-barDegrees);
          }  
             
         }
@@ -267,15 +273,21 @@ class FaceOfFenixApp extends Application.AppBase {
             }
                      
           var barUnit = (diagramStartDeg.toDouble() - diagramEndDeg.toDouble()) / 100;
-          var barDegrees = (percentage * barUnit);
-      
+
+          var barDegrees = (percentage * barUnit)-1;
+
+          if(barDegrees < 1)
+           {
+            barDegrees = 1;
+           }
+
           barDegrees = barDegrees.toNumber();
       
           dcObj.setColor(floorColor, Graphics.COLOR_BLACK);
           
           for(var i = (diagramWidth/2)+1; i < (diagramWidth-1); i++)
            {
-            dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,(diagramStartDeg-1),(diagramStartDeg-1)-barDegrees-1);
+            dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,(diagramStartDeg-1),(diagramStartDeg-1)-barDegrees);
            }     
          
           }
