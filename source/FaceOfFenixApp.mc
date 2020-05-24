@@ -397,7 +397,8 @@ class FaceOfFenixApp extends Application.AppBase {
      dcObj.setColor(Graphics.COLOR_ORANGE, Graphics.COLOR_BLACK);
      for(var i = 2; i < (diagramWidth-1); i++)
       {
-        dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramStartDeg-nightEndDeg,diagramStartDeg-nightStartDeg);
+        //dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramStartDeg-nightEndDeg,diagramStartDeg-nightStartDeg);
+        dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramStartDeg-2,diagramEndDeg+2);
       }    
         
      dcObj.setColor(0xff8400, Graphics.COLOR_BLACK);

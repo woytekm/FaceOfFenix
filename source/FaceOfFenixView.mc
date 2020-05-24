@@ -86,7 +86,7 @@ class FaceOfFenixView extends WatchUi.WatchFace {
 		   SunsetTimeString = getEventTimeString(SunsetMoment);
 		   
 		   MidnightMoment = Time.today();
-		     
+		   		   
 		   NightEndMoment = getSunMoment(curLoc,NIGHT_END);
 		   NightStartMoment = getSunMoment(curLoc,NIGHT);
 		   
