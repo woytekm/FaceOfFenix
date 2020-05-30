@@ -382,15 +382,15 @@ class FaceOfFenixApp extends Application.AppBase {
      var Now = Time.now();
      var FromMidnightTillSunrise = SunriseMoment.value() - MidnightMoment.value();
      var FromMidnightTillSunset = SunsetMoment.value() - MidnightMoment.value();
-     var FromMidnightTillNightEnd = NightEndMoment.value() - MidnightMoment.value();
-     var FromMidnightTillNight = NightStartMoment.value() - MidnightMoment.value();
+     //var FromMidnightTillNightEnd = NightEndMoment.value() - MidnightMoment.value();
+     //var FromMidnightTillNight = NightStartMoment.value() - MidnightMoment.value();
      var FromMidnightTillNow = Now.value() - MidnightMoment.value();
      
      var dayStartDeg = (FromMidnightTillSunrise.toNumber()/60)/16;
      var dayEndDeg = (FromMidnightTillSunset.toNumber()/60)/16;
      
-     var nightEndDeg = (FromMidnightTillNightEnd.toNumber()/60)/16;
-     var nightStartDeg = (FromMidnightTillNight.toNumber()/60)/16;
+     //var nightEndDeg = (FromMidnightTillNightEnd.toNumber()/60)/16;
+     //var nightStartDeg = (FromMidnightTillNight.toNumber()/60)/16;
       
      var nowDeg = (FromMidnightTillNow.toNumber()/60)/16;
      
@@ -398,7 +398,7 @@ class FaceOfFenixApp extends Application.AppBase {
      for(var i = 2; i < (diagramWidth-1); i++)
       {
         //dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramStartDeg-nightEndDeg,diagramStartDeg-nightStartDeg);
-        dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramStartDeg-2,diagramEndDeg+2);
+        dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramStartDeg-1,diagramEndDeg+1);
       }    
         
      dcObj.setColor(0xff8400, Graphics.COLOR_BLACK);
@@ -408,7 +408,7 @@ class FaceOfFenixApp extends Application.AppBase {
         dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramStartDeg-dayStartDeg,diagramStartDeg-dayEndDeg);
       }    
      
-     if((nowDeg > nightEndDeg)&&(nowDeg < nightStartDeg))
+     if((nowDeg > dayStartDeg)&&(nowDeg < dayEndDeg))
       {
        dcObj.setColor(0x000000, Graphics.COLOR_BLACK);
       }

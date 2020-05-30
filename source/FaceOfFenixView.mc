@@ -87,8 +87,8 @@ class FaceOfFenixView extends WatchUi.WatchFace {
 		   
 		   MidnightMoment = Time.today();
 		   		   
-		   NightEndMoment = getSunMoment(curLoc,NIGHT_END);
-		   NightStartMoment = getSunMoment(curLoc,NIGHT);
+		   //NightEndMoment = getSunMoment(curLoc,NIGHT_END);
+		   //NightStartMoment = getSunMoment(curLoc,NIGHT);
 		   
 		   FaceOfFenixApp.displayLabel("SunriseLabel",FontForeground,SunriseTimeString);
 		   FaceOfFenixApp.displayLabel("SunsetLabel",FontForeground,SunsetTimeString);
