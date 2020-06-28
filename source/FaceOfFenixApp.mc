@@ -184,10 +184,11 @@ class FaceOfFenixApp extends Application.AppBase {
          }
 
       barDegrees = barDegrees.toNumber();
+      //System.println("Bar degrees:"+barDegrees);
       
       for(var i = 2; i < (diagramWidth-1); i++)
         {
-         dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramEndDeg+barDegrees,diagramEndDeg+1);
+         dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - i,Gfx.ARC_CLOCKWISE,diagramEndDeg+barDegrees,diagramEndDeg);
         }        
     
     }
@@ -214,6 +215,7 @@ class FaceOfFenixApp extends Application.AppBase {
 	  }
      
 	 dcObj.setColor(color, Graphics.COLOR_BLACK);
+	 
 	 dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius,Gfx.ARC_CLOCKWISE,diagramStartDeg,diagramEndDeg);
      dcObj.drawArc(screenWidth/2,screenHeight/2,diagramRadius - diagramWidth,Gfx.ARC_CLOCKWISE,diagramStartDeg,diagramEndDeg);  	 
      
